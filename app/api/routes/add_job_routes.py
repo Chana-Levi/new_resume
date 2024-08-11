@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
 from app import db
 from app.services.file_services.query_service import query, parse_response_to_dict
 import os
@@ -23,15 +23,26 @@ def job_content():
     """
     Handle the form submission for adding a job.
 
-    Extract job details from the form, use a template to structure the query,
-    extract relevant details from the response, and add the job to the database.
+    Validate form inputs, check if the job exists, and either redirect to the confirmation page or show an error.
 
     Returns:
-        Response: JSON response containing the job title, job number, and job description.
+        Response: Redirects to the job confirmation page if successful,
+                  or renders the add job page with an error message if unsuccessful.
     """
     job_title = request.form['job_title']
     job_description = request.form['job_description']
     job_number = request.form['job_number']
+
+    # Validate that all fields are filled
+    if not job_title or not job_description or not job_number:
+        flash("All fields are required.", "error")
+        return render_template('add_job.html')
+
+    # Example check for existing job - Adjust this according to your database logic
+    existing_job = db['job'].jobs.find_one({"job_number": job_number})
+    if existing_job:
+        flash("Job with this number already exists.", "error")
+        return render_template('add_job.html')
 
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     json_path = os.path.join(base_dir, 'static', 'json_templates', 'job_template.json')
@@ -53,9 +64,22 @@ def job_content():
                                mandatory_requirements,
                                general_requirements, advantageous_requirements)
     if not job_id:
-        return "The job not added to mongo db"
-    return jsonify({
-        "job_title": job_title,
-        "job_number": job_number,
-        "job_description": job_description
-    })
+        flash("The job could not be added to the database.", "error")
+        return render_template('add_job.html')
+
+    return redirect(url_for('add_job_bp.job_confirmation', job_title=job_title, job_number=job_number))
+
+
+@add_job_bp.route('/job_confirmation')
+def job_confirmation():
+    """
+    Render the job confirmation page after a job has been successfully created.
+
+    Returns:
+        Response: Rendered HTML page for job confirmation.
+    """
+    job_title = request.args.get('job_title')
+    job_number = request.args.get('job_number')
+    return render_template('job_confirmation.html', job_title=job_title, job_number=job_number)
+
+

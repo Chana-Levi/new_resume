@@ -1,7 +1,7 @@
 # app/__init__.py
 from flask import Flask
-from config import Config
 from authlib.integrations.flask_client import OAuth
+from config import Config
 from app.db.mongo_connection import db_connection
 from app.db.job_model import JobModel
 from app.db.match_model import MatchModel
@@ -55,7 +55,6 @@ def create_app():
     from app.api.routes.resume_routes import resume_list_bp
     # from app.api.routes.nav_bar import navbar_bp
     from app.api.routes.temp import temp_bp
-    from app.api.routes.job_confirmation import job_confirmation_bp
     from app.api.routes.nav import nav_bp
 
     app.register_blueprint(auth_bp)
@@ -67,7 +66,6 @@ def create_app():
     app.register_blueprint(resume_list_bp)
     # app.register_blueprint(navbar_bp)
     app.register_blueprint(temp_bp)
-    app.register_blueprint(job_confirmation_bp)
     app.register_blueprint(nav_bp)
 
     # Assign db and oauth to app
