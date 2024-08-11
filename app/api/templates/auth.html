@@ -117,7 +117,7 @@
             <input type="text" class="input-field" placeholder="Username">
             <input type="email" class="input-field" placeholder="Email">
             <input type="password" class="input-field" placeholder="Password">
-            <button class="google-button">
+            <button class="google-button" onclick="window.location.href='{{ url_for('auth_bp.google_login', login_attempt='register') }}'">
                 <img src="https://www.google.com/images/icons/product/search-32.png" alt="Google Logo" width="24" height="24">
                 Continue with Google
             </button>
