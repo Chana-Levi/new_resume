@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Upload</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            height: 100vh;
+        }
+        .main-content {
+            width: 100%;
+            background-color: white;
+            padding: 40px 60px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin: 20px auto;
+            overflow-y: auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .header div {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .header .info {
+            margin-left: 20px;
+        }
+        .header .info p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .header .buttons button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 20px;
+        }
+        .header .buttons .delete {
+            background-color: #ccc;
+            color: black;
+        }
+        .header .buttons .confirm {
+            background-color: #EF5DA8;
+            color: white;
+        }
+        .resume {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+        }
+        .resume .left-column {
+            width: 58%;
+        }
+        .resume .right-column {
+            width: 38%;
+        }
+        .resume h2 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+        .resume p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .resume .section {
+            margin-bottom: 30px;
+        }
+        .resume .section-title {
+            padding: 5px 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            border: 2px solid #2b3784;
+            border-radius: 25px;
+            color: #2b3784;
+        }
+        .resume .skills-competencies, .resume .tools, .resume .language, .resume .education {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .resume .right-column .list {
+            padding-left: 15px;
+        }
+        .resume .right-column .list p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .resume {
+                flex-direction: column;
+            }
+            .resume .left-column, .resume .right-column {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        function confirmAction() {
+            if (confirm('Are you sure you want to confirm the resume upload?')) {
+                window.location.href = 'link';
+            }
+        }
+    </script>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <div class="container">
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <div class="info">
+                        <p>&#9993; {{ personal_info.contact_info.email }}</p>
+                        <p>&#9742; {{ personal_info.contact_info.phone_number }}</p>
+                        <p>&#128205; {{ personal_info.contact_info.address.city }}, {{ personal_info.contact_info.address.country }}</p>
+                        <p>&#127760; {{ personal_info.github }}</p>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="delete" onclick="return confirm('Are you sure you want to delete the upload?')">Delete upload</button>
+                    <button class="confirm" onclick="confirmAction()">Confirm resume upload</button>
+                </div>
+            </div>
+            <div class="resume">
+                <div class="left-column">
+                    <h2>{{ personal_info.name }}</h2>
+                    <p>{{ summary }}</p>
+                    <div class="section">
+                        <h3 class="section-title">Work Experience</h3>
+                        <div class="work-experience">
+                            {% for job in experience %}
+                                <p>{{ job.start_date }} - {{ job.end_date }}</p>
+                                <p><strong>{{ job.job_title }}</strong></p>
+                                <p>{{ job.company }}</p>
+                                <p>{{ job.location }}</p>
+                                <ul>
+                                    {% for responsibility in job.responsibilities %}
+                                        <li>{{ responsibility }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="section education">
+                        <h3 class="section-title">Education</h3>
+                        <div class="list">
+                            {% for edu in education %}
+                                <p><strong>{{ edu.degree }}</strong></p>
+                                <p>{{ edu.institution }}</p>
+                                <p>{{ edu.graduation_date }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="section skills-competencies">
+                        <h3 class="section-title">Skills & Competencies</h3>
+                        <div class="list">
+                            {% for skill in skills %}
+                                <p>{{ skill }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="section tools">
+                        <h3 class="section-title">Tools</h3>
+                        <div class="list">
+                            {% for tool in tools %}
+                                <p>{{ tool }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="section language">
+                        <h3 class="section-title">Language</h3>
+                        <div class="list">
+                            {% for language in languages %}
+                                <p>{{ language.language }} - {{ language.proficiency_level }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

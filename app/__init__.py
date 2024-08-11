@@ -54,7 +54,7 @@ def create_app():
     from app.api.routes.monitoring_routes import monitoring_bp
     from app.api.routes.resume_routes import resume_list_bp
     # from app.api.routes.nav_bar import navbar_bp
-    from app.api.routes.temp import temp_bp
+    from app.api.routes.resume import resume_bp
     from app.api.routes.nav import nav_bp
 
     app.register_blueprint(auth_bp)
@@ -65,7 +65,7 @@ def create_app():
     app.register_blueprint(monitoring_bp)
     app.register_blueprint(resume_list_bp)
     # app.register_blueprint(navbar_bp)
-    app.register_blueprint(temp_bp)
+    app.register_blueprint(resume_bp)
     app.register_blueprint(nav_bp)
 
     # Assign db and oauth to app

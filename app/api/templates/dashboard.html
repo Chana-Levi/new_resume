@@ -257,7 +257,7 @@
                     <td>{{ resume.candidate_name }}</td>
                     <td>{{ resume.job_number }}</td>
                     <td>{{ resume.job_title }}</td>
-                    <td><a class="link">See full resumes</a></td>
+                    <td><a class="link" href="{{ url_for('resume_bp.show_resume', resume_id=resume.resume_id) }}">See full resume</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
