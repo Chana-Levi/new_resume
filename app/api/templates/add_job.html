@@ -174,15 +174,15 @@
                     <div class="form-column">
                         <div class="form-group">
                             <label for="jobTitle" class="form-label">Job title</label>
-                            <input type="text" class="form-control" id="jobTitle" name="job_title">
+                            <input type="text" class="form-control" id="jobTitle" name="job_title" value="{{ request.args.get('job_title', '') }}">
                         </div>
                         <div class="form-group">
                             <label for="jobNumber" class="form-label">Job number</label>
-                            <input type="text" class="form-control" id="jobNumber" name="job_number">
+                            <input type="text" class="form-control" id="jobNumber" name="job_number" value="{{ request.args.get('job_number', '') }}">
                         </div>
                         <div class="form-group form-group-full">
                             <label for="jobDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="jobDescription" name="job_description" rows="3">.</textarea>
+                            <textarea class="form-control" id="jobDescription" name="job_description" rows="3">{{ request.args.get('job_description', '') }}</textarea>
                         </div>
                     </div>
                     <div class="form-column">
@@ -190,12 +190,13 @@
                             <label for="requirements" class="form-label">Requirements</label>
                             <div class="requirements-label">T</div>
                             <div class="requirements-input">
-                                <textarea class="form-control" id="requirements" name="requirements" rows="3"></textarea>
+                                <textarea class="form-control" id="requirements" name="requirements" rows="3">{{ request.args.get('requirements', '') }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="openingDate" class="form-label">Opening valid date</label>
-                            <input type="text" class="form-control" id="openingDate" name="opening_valid_date" placeholder="MM/DD/YYYY">
+                            <input type="text" class="form-control" id="openingDate" name="opening_valid_date" placeholder="MM/DD/YYYY" value="{{ request.args.get('opening_valid_date', '') }}">
+
                         </div>
                     </div>
                 </div>

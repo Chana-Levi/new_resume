@@ -10,12 +10,27 @@ add_job_bp = Blueprint('add_job_bp', __name__, url_prefix='/add_job')
 @add_job_bp.route('/', methods=['GET'])
 def add_job():
     """
-    Render the add job page.
+    Render the add job page with optional pre-filled data.
 
     Returns:
         Response: Rendered HTML page for adding a job.
     """
-    return render_template('add_job.html')
+    job_title = request.args.get('job_title', '')
+    job_number = request.args.get('job_number', '')
+    job_description = request.args.get('job_description', '')
+    requirements = request.args.get('requirements', '')
+    opening_valid_date = request.args.get('opening_valid_date', '')
+
+    return render_template(
+        'add_job.html',
+        job_title=job_title,
+        job_number=job_number,
+        job_description=job_description,
+        requirements=requirements,
+        opening_valid_date=opening_valid_date
+    )
+
+
 
 
 @add_job_bp.route('/job_content', methods=['POST'])
@@ -32,6 +47,7 @@ def job_content():
     job_title = request.form['job_title']
     job_description = request.form['job_description']
     job_number = request.form['job_number']
+    requirements = request.form['requirements']
 
     # Validate that all fields are filled
     if not job_title or not job_description or not job_number:
@@ -51,7 +67,7 @@ def job_content():
 
     query_request = (f"extract the following details from the text: {cv_data_template} \nMake sure your response is a "
                      f"valid json format")
-    response = query(f"{job_title} \n {job_description} \n {job_number}", query_request)
+    response = query(f"{job_title} \n {job_description} \n {job_number} \n {requirements}", query_request)
     extracted_details = parse_response_to_dict(response)
 
     company_name = extracted_details.get('organization_name')
@@ -81,5 +97,4 @@ def job_confirmation():
     job_title = request.args.get('job_title')
     job_number = request.args.get('job_number')
     return render_template('job_confirmation.html', job_title=job_title, job_number=job_number)
-
 

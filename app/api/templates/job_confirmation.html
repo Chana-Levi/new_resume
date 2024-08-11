@@ -213,8 +213,9 @@
             </button>
             <input type="file" id="fileInput">
             <div class="footer">
-                <p>Forgot something? <a href="{{ url_for('add_job_bp.add_job', job_title=job_title, job_number=job_number, job_description='Full-time') }}">You can edit your job details here</a></p>
+                <p>Forgot something? <a href="{{ url_for('add_job_bp.add_job', job_title=job_title, job_number=job_number, job_description='Full-time', requirements='On-demand', opening_valid_date='01.09.2024') }}">You can edit your job details here</a></p>
             </div>
+
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>

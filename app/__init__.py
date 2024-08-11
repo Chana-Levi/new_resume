@@ -52,10 +52,10 @@ def create_app():
     from app.api.routes.jobs_list_routes import jobs_list_bp
     from app.api.routes.matching_routes import matching_bp
     from app.api.routes.monitoring_routes import monitoring_bp
-    from app.api.routes.resume_routes import resume_list_bp
     # from app.api.routes.nav_bar import navbar_bp
     from app.api.routes.temp import temp_bp
     from app.api.routes.nav import nav_bp
+    from app.api.routes.resume_list import resume_list_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)

@@ -3,194 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume List</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Job Openings</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        label { margin-right: 10px; }
-        select { margin-bottom: 20px; }
-        #resumes ul { list-style-type: none; padding: 0; }
-        #resumes li { background: #f9f9f9; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; position: relative; display: flex; align-items: flex-start; justify-content: space-between; }
-        #resumes li a { text-decoration: none; color: #007BFF; }
-        .resume-content { white-space: pre-wrap; line-height: 1.5; flex-grow: 1; }
-        .icon-container { display: flex; flex-direction: column; align-items: center; }
-        .icon-container div { margin: 5px 0; }
-        .delete-btn, .view-btn, .link-btn, .edit-btn, .updated-indicator { background: none; border: none; cursor: pointer; }
-        .delete-btn { color: #FF0000; }
-        .view-btn { color: #007BFF; }
-        .link-btn { color: #28A745; }
-        .edit-btn { color: #FFA500; }
-        .updated-indicator { color: #FFD700; font-size: 1.5em; }
-        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); }
-        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; }
-        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
-        .close:hover, .close:focus { color: black; text-decoration: none; cursor: pointer; }
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;700&display=swap');
+
+        body {
+            font-family: 'Urbanist', sans-serif;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .container {
+            margin-left: 80px;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #150F6B;
+        }
+
+        .header .search-bar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            outline: none;
+            font-size: 14px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .search-bar svg {
+            width: 16px;
+            height: 16px;
+            stroke: #727171;
+        }
+
+        .job-list {
+            width: 100%;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .job-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 2fr 1fr;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #3e3c75;
+        }
+
+        .job-id,
+        .job-matches {
+            color: #3e3c75;
+        }
+
+        .job-status {
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+            display: inline-block;
+        }
+
+        .job-status.active {
+            background-color: #7366f2;
+        }
+
+        .job-status.pending {
+            background-color: #c5c5c5;
+        }
+
+        .job-action {
+            text-align: right;
+        }
+
+        .job-action a {
+            color: #ff4f81;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .notification-wrapper {
+            position: relative;
+            width: 62px;
+            height: 62px;
+        }
+
+        .notification-bell {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .notification-bell svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .notification-bell .bell-icon {
+            width: 31px;
+            height: 31px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+
+        .notification-dot {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            top: 3px;
+            right: 3px;
+            display: none;
+        }
+
+        .notification-dot.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <h1>Resume List</h1>
-    <form action="/resume_list/" method="GET">
-        <label for="job">Select Job:</label>
-        <select id="job" name="job_id" onchange="this.form.submit()">
-            <option value="">--Select Job--</option>
-            {% for job in jobs %}
-            <option value="{{ job._id }}" {% if selected_job and selected_job._id == job._id %}selected{% endif %}>
-                {{ job.job_number }} - {{ job.company_name }}
-            </option>
-            {% endfor %}
-        </select>
-    </form>
-    <div id="resumes">
-        {% if selected_job %}
-        <h2>Resumes for Job {{ selected_job.job_number }} - {{ selected_job.company_name }}</h2>
-        <ul>
-            {% for resume in resumes %}
-            <li>
-                <div class="resume-content">{{ resume.full_text_resume }}</div>
-                <div class="icon-container">
-                    {% if resume.is_extracted_updated %}
-                    <div class="updated-indicator" title="Updated">&#9733;</div>
-                    {% endif %}
-                    <div>
-                        <button class="edit-btn" onclick="editResume('{{ resume._id }}')" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="link-btn" onclick="viewResumeLink('{{ resume._id }}')" title="View Link">
-                            <i class="fas fa-link"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="view-btn" onclick="viewResume('{{ resume._id }}')" title="View">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <form action="/resume_list/delete_resume/{{ resume._id }}" method="POST" style="display:inline;">
-                            <input type="hidden" name="job_id" value="{{ selected_job._id }}">
-                            <button type="submit" class="delete-btn" title="Delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-
-    <div id="resumeModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <pre id="resumeText" class="resume-content"></pre>
+    {% include 'nav.html' %}
+    <div class="container">
+        <div class="header">
+            <h1>Job openings</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search jobs">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" fill="none">
+                    <path d="M14.3269 14.44L17.8 17.8M16.68 8.84C16.68 13.1699 13.1699 16.68 8.84 16.68C4.51009 16.68 1 13.1699 1 8.84C1 4.51009 4.51009 1 8.84 1C13.1699 1 16.68 4.51009 16.68 8.84Z" stroke="#727171" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
         </div>
-    </div>
-
-    <div id="linkModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <pre id="resumeLink" class="resume-content"></pre>
-        </div>
-    </div>
-
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Edit Resume</h3>
-            <form id="editForm">
-                <textarea id="editResumeText" rows="10" cols="80"></textarea>
-                <br>
-                <button type="button" onclick="confirmEdit()">Save</button>
-            </form>
+        <div class="job-list" id="job-list">
+            <!-- Job items will be injected here by JavaScript -->
         </div>
     </div>
 
     <script>
-        let currentResumeId = null;
+        const jobs = [
+            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true },
+            { title: 'UI/UX designer', id: '0456792', matches: 14, status: 'Pending', hasNotification: false },
+            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: false },
+            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true },
+            { title: 'UI/UX designer', id: '0456792', matches: 14, status: 'Pending', hasNotification: false },
+            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true }
+        ];
 
-        function viewResume(resumeId) {
-            fetch(`/resume_list/view_resume/${resumeId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.resume_text) {
-                        document.getElementById('resumeText').innerText = JSON.stringify(data.resume_text, null, 2);
-                        document.getElementById('resumeModal').style.display = "block";
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
-                });
-        }
+        function renderJobs() {
+            const jobList = document.getElementById('job-list');
+            jobList.innerHTML = '';
 
-        function viewResumeLink(resumeId) {
-            fetch(`/resume_list/view_resume_link/${resumeId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.resume_link) {
-                        document.getElementById('resumeLink').innerText = data.resume_link;
-                        document.getElementById('linkModal').style.display = "block";
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
-                });
-        }
+            jobs.forEach(job => {
+                const jobItem = document.createElement('div');
+                jobItem.className = 'job-item';
 
-        function editResume(resumeId) {
-            currentResumeId = resumeId;
-            fetch(`/resume_list/view_resume/${resumeId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.resume_text) {
-                        document.getElementById('editResumeText').value = JSON.stringify(data.resume_text, null, 2);
-                        document.getElementById('editModal').style.display = "block";
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
-                });
-        }
+                jobItem.innerHTML = `
+                    <div class="job-title">${job.title}</div>
+                    <div class="job-id">${job.id}</div>
+                    <div class="job-matches">${job.matches} matches</div>
+                    <div class="job-status ${job.status.toLowerCase()}">${job.status}</div>
+                    <div class="job-action"><a href="#">Upload resume to role</a></div>
+                    <div class="notification-wrapper">
+                        <div class="notification-bell">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                <circle cx="31" cy="31" r="30.622" fill="#F5F5F5" stroke="#FAE506" stroke-width="0.756098"/>
+                            </svg>
+                            <svg class="bell-icon" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none">
+                                <path d="M8.76733 27.6049L8.38928 26.9501H8.38928L8.76733 27.6049ZM7.69915 26.8017L6.94884 26.7084L7.69915 26.8017ZM6.85358 22.3088L6.19418 22.6789L6.19878 22.6868L6.85358 22.3088ZM5.57704 20.0342L6.23645 19.6641L6.23184 19.6562L5.57704 20.0342ZM25.6642 17.8495L26.0423 18.5043V18.5043L25.6642 17.8495ZM25.5191 16.5375L25.8273 15.8471L25.8273 15.8471L25.5191 16.5375ZM22.0898 13.5122L21.4302 13.8818L21.435 13.8902L22.0898 13.5122ZM20.8779 11.3495L21.5375 10.9798L21.5327 10.9714L20.8779 11.3495ZM8.75248 8.06956L8.37443 7.41477L8.75248 8.06956ZM16.7628 27.4989L17.1408 28.1537L16.7628 27.4989ZM8.44947 26.895C8.62088 25.517 8.5139 23.6724 7.50838 21.9308L6.19878 22.6868C6.99319 24.0628 7.09283 25.5507 6.94884 26.7084L8.44947 26.895ZM7.51294 21.9388L6.2364 19.6642L4.91769 20.4043L6.19423 22.6788L7.51294 21.9388ZM25.8273 15.8471C24.7786 15.3789 23.5498 14.5287 22.7446 13.1341L21.435 13.8902C22.4421 15.6346 23.9598 16.6694 25.2109 17.2279L25.8273 15.8471ZM22.7494 13.1425L21.5375 10.9799L20.2183 11.7191L21.4302 13.8818L22.7494 13.1425ZM21.5327 10.9714C18.867 6.35441 12.9771 4.7574 8.37443 7.41477L9.13052 8.72436C13.0041 6.48796 17.9716 7.8279 20.2231 11.7275L21.5327 10.9714ZM26.0423 18.5043C26.6211 18.17 26.7614 17.5446 26.7043 17.0823C26.6474 16.6212 26.3744 16.0913 25.8273 15.8471L25.2109 17.2279C25.1845 17.2162 25.179 17.2034 25.185 17.2124C25.1878 17.2167 25.1919 17.2242 25.1957 17.2349C25.1995 17.2455 25.2022 17.2568 25.2035 17.2676C25.2049 17.2785 25.2045 17.2861 25.2041 17.2897C25.2037 17.2933 25.2036 17.29 25.2071 17.2813C25.2107 17.2721 25.2184 17.257 25.2328 17.2397C25.2477 17.2218 25.2663 17.2061 25.2862 17.1947L26.0423 18.5043ZM6.23184 19.6562C4.01607 15.8183 5.31849 10.9252 9.13052 8.72436L8.37443 7.41477C3.83325 10.0366 2.29229 15.857 4.92224 20.4123L6.23184 19.6562ZM8.38928 26.9501C8.40975 26.9383 8.43325 26.9299 8.4567 26.926C8.47936 26.9222 8.49645 26.9233 8.50584 26.9248C8.51485 26.9262 8.51696 26.9278 8.51282 26.9259C8.50872 26.9241 8.50106 26.92 8.49147 26.9126C8.48194 26.9052 8.47276 26.8963 8.46493 26.8869C8.45708 26.8774 8.4523 26.8693 8.4498 26.8642C8.44452 26.8534 8.45321 26.865 8.44947 26.895L6.94884 26.7084C6.87372 27.3122 7.19754 27.8241 7.5675 28.1096C7.93794 28.3956 8.55721 28.5993 9.14538 28.2597L8.38928 26.9501ZM25.2862 17.1947L8.38928 26.9501L9.14538 28.2597L26.0423 18.5043L25.2862 17.1947ZM17.7631 22.4112C18.6103 23.8785 18.0562 25.879 16.3847 26.8441L17.1408 28.1537C19.4547 26.8178 20.3827 23.924 19.0727 21.6551L17.7631 22.4112ZM16.3847 26.8441C14.7132 27.8091 12.7037 27.2887 11.8565 25.8213L10.5469 26.5774C11.8569 28.8464 14.8269 29.4896 17.1408 28.1537L16.3847 26.8441ZM9.11432 4.65344C9.67252 5.62028 9.34126 6.85656 8.37443 7.41477L9.13052 8.72436C10.8206 7.74858 11.3997 5.58745 10.4239 3.89735L9.11432 4.65344ZM8.37443 7.41477C7.40759 7.97297 6.17131 7.64171 5.61311 6.67487L4.30351 7.43097C5.27929 9.12108 7.44042 9.70015 9.13052 8.72436L8.37443 7.41477ZM5.61311 6.67487C5.05491 5.70804 5.38617 4.47175 6.353 3.91355L5.5969 2.60395C3.9068 3.57973 3.32773 5.74086 4.30351 7.43097L5.61311 6.67487ZM6.353 3.91355C7.31983 3.35535 8.55612 3.68661 9.11432 4.65344L10.4239 3.89735C9.44814 2.20724 7.28701 1.62817 5.5969 2.60395L6.353 3.91355Z" fill="#150F6B"/>
+                            </svg>
+                        </div>
+                        <div class="notification-dot ${job.hasNotification ? 'active' : ''}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                                <circle cx="7.18293" cy="7.45124" r="7.18293" fill="#EF5DA8"/>
+                            </svg>
+                        </div>
+                    </div>
+                `;
 
-        function confirmEdit() {
-            if (confirm("Do you want to save the changes?")) {
-                saveEdit();
-            }
-        }
-
-        function saveEdit() {
-            const editedText = document.getElementById('editResumeText').value;
-            fetch(`/resume_list/edit_resume/${currentResumeId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ extract_resume: editedText })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    document.getElementById('editModal').style.display = "none";
-                    location.reload();  // Refresh the page to show the updated indicator
-                } else {
-                    alert('Error: ' + data.error);
-                }
+                jobList.appendChild(jobItem);
             });
         }
 
-        document.querySelectorAll('.close').forEach(closeButton => {
-            closeButton.onclick = function() {
-                closeButton.closest('.modal').style.display = "none";
-            }
-        });
-
-        window.onclick = function(event) {
-            document.querySelectorAll('.modal').forEach(modal => {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            });
-        }
+        window.onload = renderJobs;
     </script>
 </body>
 </html>
