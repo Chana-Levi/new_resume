@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Update Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FFFFFF; /* צבע לבן מוחלט */
+            margin: 0;
+            padding: 0;
+            font-family: 'Urbanist', sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 60px;
+            background-color: #162A84;
+            position: fixed;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 0px;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: calc(100% - 60px);
+            margin-left: 60px;
+            height: 100vh;
+            background-color: #FFFFFF; /* לוודא שהרקע של הקונטיינר גם לבן */
+        }
+
+        .container {
+            background-color: #FFFFFF; /* לבן מוחלט */
+            border-radius: 15px;
+            box-shadow: 1px 3px 4.8px 2px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 50.25rem;
+            height: 31.8125rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .container h1 {
+            color: #EF5DA8;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 16px 0 8px 0;
+        }
+
+        .container .subheading {
+            color: #000;
+            text-align: center;
+            font-family: Urbanist, sans-serif;
+            font-size: 1.5rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            width: 27.6875rem;
+            height: 3.625rem;
+            margin: 0 auto 17.44px auto;
+        }
+
+        .details {
+            display: flex;
+            padding: 1.4375rem 8.3125rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.625rem;
+            align-self: stretch;
+            border-radius: 0.9375rem;
+            border: 0.25px solid #7879F1;
+            background: #FFFFFF; /* רקע לבן */
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .details-grid {
+            display: flex;
+            width: 22.6875rem;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem 1.125rem;
+            flex-wrap: wrap;
+        }
+
+        .details-grid p {
+            color: #150F6B;
+            text-align: center;
+            font-family: Urbanist;
+            font-size: 1rem;
+            font-style: normal;
+            line-height: normal;
+        }
+
+        .details-grid p.item-title {
+            font-weight: 700;
+        }
+
+        .details-grid p.item-value {
+            font-weight: 500;
+        }
+
+        .button {
+            background-color: #EF5DA8;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 56.75px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button svg {
+            margin-right: 10px;
+        }
+
+        .button:hover {
+            background-color: #E91E63;
+        }
+
+        .footer {
+            color: #150F6B;
+            text-align: center;
+            font-family: Urbanist;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-decoration-line: underline;
+            margin-top: 2.08rem;
+        }
+
+        .footer a {
+            color: #150F6B;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .checkmark-icon {
+            position: absolute;
+            top: -3.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #D7D7FE;
+            border-radius: 2.875rem;
+            width: 5.75rem;
+            height: 5.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 1.736px 3.472px 4.253px 0px rgba(0, 0, 0, 0.10);
+        }
+
+        .checkmark-icon svg {
+            width: 3.75rem;
+            height: 3.75rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+{% include 'nav.html' %}
+    <div class="main-content">
+        <div class="container">
+            <div class="checkmark-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="61" height="60" viewBox="0 0 61 60" fill="none">
+                    <path d="M53 30C53 42.4264 42.9264 52.5 30.5 52.5C18.0736 52.5 8 42.4264 8 30C8 17.5736 18.0736 7.5 30.5 7.5C34.0301 7.5 37.3704 8.31297 40.3438 9.76191M48.7812 15.9375L29.0938 35.625L23.4688 30" stroke="black" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1>It's in the air!</h1>
+            <p class="subheading">Your new job opening #123465 has been successfully updated</p>
+            <div class="details">
+                <div class="details-grid">
+                    <p class="item-title"><strong>Job title:</strong></p>
+                    <p class="item-value"><span>Full stack</span></p>
+                    <p class="item-title"><strong>Job number:</strong></p>
+                    <p class="item-value"><span>123465</span></p>
+                    <p class="item-title"><strong>Description:</strong></p>
+                    <p class="item-value"><span>Full-time</span></p>
+                    <p class="item-title"><strong>Requirements:</strong></p>
+                    <p class="item-value"><span>On-demand</span></p>
+                    <p class="item-title"><strong>Opening valid date:</strong></p>
+                    <p class="item-value"><span>01.09.2024</span></p>
+                </div>
+            </div>
+            <button class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="21" viewBox="0 0 19 21" fill="none">
+                    <path d="M9.31829 13.4425L9.31829 1.5M9.31829 1.5L4.38567 6.06318M9.31829 1.5L14.2509 6.06318M1.31732 17.4663V18.8827C1.72203 19.278 2.27093 19.5 2.84327 19.5H15.7914C16.3637 19.5 16.9126 19.278 17.3173 18.8827V17.4663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Upload resume to start the match search
+            </button>
+            <input type="file" id="fileInput">
+            <div class="footer">
+                <p>Forgot something? <a href="jobs.html">You can edit your job details here</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        document.querySelector('.button').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+    </script>
+</body>
+</html>

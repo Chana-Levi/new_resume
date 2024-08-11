@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant-Job Matching Scores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Applicant-Job Matching Scores</h1>
+        <p class="mb-4">Below are the matching scores between applicants and job openings based on their resumes and job requirements.</p>
+        <div class="accordion" id="resumesAccordion">
+            {% for resume in resumes %}
+            <div class="card">
+                <div class="card-header" id="heading{{ loop.index }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                            Job ID: {{ resume.job_number }}<br>Candidate ID: {{ resume.candidate_name }}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse{{ loop.index }}" class="collapse {% if loop.first %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-parent="#resumesAccordion">
+                    <div class="card-body">
+                        <h5>General Requirements</h5>
+                        <ul class="list-group mb-3">
+                            {% for requirement, score in resume.general_requirements.items() %}
+                            <li class="list-group-item">{{ requirement }}: {{ score }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h5>Mandatory Requirements</h5>
+                        <ul class="list-group mb-3">
+                            {% for requirement, score in resume.mandatory_requirements.items() %}
+                            <li class="list-group-item">{{ requirement }}: {{ score }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h5>Advantageous Requirements</h5>
+                        <ul class="list-group mb-3">
+                            {% for requirement, score in resume.advantageous_requirements.items() %}
+                            <li class="list-group-item">{{ requirement }}: {{ score }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h5>Final Score</h5>
+                        <p>{{ resume.final_score }}</p>
+                        <h5>Comments</h5>
+                        <p>{{ resume.general_system_comments }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

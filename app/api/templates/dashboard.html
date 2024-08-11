@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Page Example</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;700&display=swap');
+        body {
+            font-family: 'Urbanist', sans-serif;
+            display: flex;
+            flex-direction: row; /* שינוי חשוב */
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .sidebar {
+            width: 60px;
+            background-color: #162A84;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .container {
+            margin-left: 80px; /* כדי להרחיק את התוכן מה- NAV */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - 80px); /* התחשבות ב- NAV */
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        h1 {
+            color: #150F6B;
+            font-size: 20px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        .icon {
+            width: 12px;
+            height: 12px;
+            transform: rotate(116.653deg);
+            background: #EF5DA8;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            color: #727171;
+            font-size: 14px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .search-icon {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2px;
+            stroke: #727171;
+            margin-right: 10px;
+        }
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 14px;
+            color: #727171;
+            background-color: transparent;
+            flex: 1;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 15px;
+            border: 1px solid #7879F1;
+            background: #FFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
+            text-decoration: none;
+            color: #7879F1;
+            font-size: 16px;
+            font-weight: 500;
+            width: 300px;
+            height: 80px;
+            text-align: center;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #f0f0f0;
+        }
+        .button svg {
+            fill: #7879F1;
+            width: 24px;
+            height: 24px;
+        }
+        .table-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 20px;
+        }
+        .table {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 0.75px solid #DAD2D2;
+            background: #FFF;
+        }
+        .table-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .table-title {
+            color: #EF5DA8;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .line {
+            height: 2px;
+            background-color: #EF5DA8;
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+        .see-all {
+            display: flex;
+            align-items: center;
+            color: #EF5DA8;
+            font-weight: 700;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .see-all svg {
+            margin-left: 5px;
+            width: 15px;
+            height: 16px;
+            fill: #EF5DA8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #DAD2D2;
+        }
+        th {
+            font-weight: 700;
+        }
+        .link {
+            color: #7879F1;
+            text-decoration: none;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        .active {
+            background-color: #D4EFFF;
+            color: #4A90E2;
+        }
+        .pending {
+            background-color: #FFE6E6;
+            color: #E94E77;
+        }
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .table-container {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+            .table {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <div class="container">
+        <div class="header">
+            <div class="icon"></div>
+            <h1>Good afternoon, Yoel</h1>
+        </div>
+        <div class="search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" viewBox="0 0 19 19" fill="none">
+                <path d="M14.3269 14.44L17.8 17.8M16.68 8.84C16.68 13.1699 13.1699 16.68 8.84 16.68C4.51009 16.68 1 13.1699 1 8.84C1 4.51009 4.51009 1 8.84 1C13.1699 1 16.68 4.51009 16.68 8.84Z" stroke="#727171" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input type="text" class="search-input" placeholder="Search anything...">
+        </div>
+        <div class="button-container">
+            <a href="#" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                    <path d="M6.46154 12H17.5385M4 7H20M10.1538 17H13.8462" stroke="#7879F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Upload new resume</span>
+            </a>
+            <a href="{{ url_for('add_job_bp.add_job') }}" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 7.5C13 6.94772 12.5523 6.5 12 6.5C11.4477 6.5 11 6.94772 11 7.5H13ZM11 16.5C11 17.0523 11.4477 17.5 12 17.5C12.5523 17.5 13 17.0523 13 16.5H11ZM16.5 13C17.0523 13 17.5 12.5523 17.5 12C17.5 11.4477 17.0523 11 16.5 11V13ZM7.5 11C6.94772 11 6.5 11.4477 6.5 12C6.5 12.5523 6.94772 13 7.5 13V11ZM20 12C20 16.4183 16.4183 20 12 20V22C17.5228 22 22 17.5228 22 12H20ZM12 20C7.58172 20 4 16.4183 4 12H2C2 17.5228 6.47715 22 12 22V20ZM4 12C4 7.58172 7.58172 4 12 4V2C6.47715 2 2 6.47715 2 12H4ZM12 4C16.4183 4 20 7.58172 20 12H22C22 6.47715 17.5228 2 12 2V4ZM11 7.5L11 12H13L13 7.5H11ZM11 12V16.5H13V12H11ZM16.5 11H12V13H16.5V11ZM12 11H7.5V13H12V11Z" fill="#7879F1"/>
+                </svg>
+                <span>Create new job opening</span>
+            </a>
+            <a href="#" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" fill="none">
+                    <path d="M9.00096 12.9425L9.00096 1M9.00096 1L4.06835 5.56318M9.00096 1L13.9336 5.56318M1 16.9663V18.3827C1.40471 18.778 1.95361 19 2.52595 19H15.4741C16.0464 19 16.5953 18.778 17 18.3827V16.9663" stroke="#7879F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Perfect match free search</span>
+            </a>
+        </div>
+        <div class="table-container">
+            <div class="table table-left" style="background-color: #FFF8FB;">
+                <div class="table-header">
+                    <div class="table-title">Recent resumes</div>
+                    <div class="line"></div>
+                    <a href="#" class="see-all">See All
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                            <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
+                        </svg>
+                    </a>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>David Boat</td>
+                            <td>1255489</td>
+                            <td>Web development</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                        <tr>
+                            <td>UI/UX designer</td>
+                            <td>0456792</td>
+                            <td>Design</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>Web development</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>Web development</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>Web development</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>Web development</td>
+                            <td><a href="#" class="link">See full resume</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table table-right">
+                <div class="table-header">
+                    <div class="table-title">Current job openings</div>
+                    <div class="line"></div>
+                    <a href="{{ url_for('jobs_list_bp.jobs_list') }}" class="see-all">See All
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                            <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
+                        </svg>
+                    </a>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>87 matches</td>
+                            <td><span class="status active">Active</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                        <tr>
+                            <td>UI/UX designer</td>
+                            <td>0456792</td>
+                            <td>87 matches</td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>87 matches</td>
+                            <td><span class="status active">Active</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>87 matches</td>
+                            <td><span class="status active">Active</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>87 matches</td>
+                            <td><span class="status active">Active</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td>1256489</td>
+                            <td>87 matches</td>
+                            <td><span class="status active">Active</span></td>
+                            <td><a href="#" class="link">Open full details</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In Screen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #150F6B; /* Background color from Figma */
+        }
+
+        .container {
+            width: 500px; /* Adjusted width */
+            height: 450px; /* Adjusted height to accommodate new button */
+            background-color: #FFFFFF; /* Background color of container */
+            border-radius: 20px; /* Adjust border-radius as needed */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding: 20px; /* Adjusted padding inside container */
+        }
+
+        .inner-container {
+            height: auto; /* Auto height */
+            background-color: transparent; /* Transparent background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0; /* Adjusted padding for inner container */
+        }
+
+        .inner-container h2 {
+            margin: 0 0 20px 0; /* Increased margin-bottom for spacing */
+            padding: 0;
+            font-size: 24px;
+            color: #000;
+            align-self: flex-start; /* Aligning to the left */
+        }
+
+        .input-field {
+            width: 420px; /* Matching width of the pink button */
+            height: 64.08px; /* Matching height of the pink button */
+            padding: 0 15px; /* Adjusted padding */
+            margin-bottom: 20px; /* Increased margin-bottom for spacing */
+            border: 1px solid #DAD2D2;
+            border-radius: 32.04px; /* Fully rounded corners to match button */
+            outline: none;
+            font-size: 18px; /* Increased font size */
+            box-sizing: border-box; /* Ensure padding is included in height */
+        }
+
+        .input-field:last-of-type {
+            margin-bottom: 10px; /* Space between last input and Google button */
+        }
+
+        .input-field::placeholder {
+            color: #DAD2D2; /* Placeholder text color */
+        }
+
+        .google-button {
+            width: 420px; /* Matching width of the pink button */
+            height: 64.08px; /* Height based on Figma */
+            background-color: #FFFFFF; /* Background color for Google button */
+            color: #000; /* Text color */
+            border: 1px solid #DAD2D2; /* Border color */
+            border-radius: 32.04px; /* Fully rounded corners */
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px; /* Space between Google button and pink button */
+        }
+
+        .google-button img {
+            margin-right: 10px; /* Space between Google logo and text */
+        }
+
+        .button {
+            width: 420px; /* Matching width of the input fields */
+            height: 64.08px; /* Height based on Figma */
+            background-color: #EF5DA8; /* Background color based on Figma */
+            color: white;
+            border: none;
+            border-radius: 32.04px; /* Half of height for fully rounded sides */
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            bottom: -32.04px; /* Half of button height to overlap */
+        }
+
+        .shapes {
+            position: absolute;
+            top: -50px; /* Adjust position to place shapes correctly */
+            right: 0px; /* Adjust position to place shapes correctly */
+            width: 10.09925rem;
+            height: 4.7155rem;
+            flex-shrink: 0;
+        }
+
+
+
+        .shapes svg rect {
+            filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.2)); /* Adding shadow to rectangles */
+        }
+
+        .shapes svg rect:nth-child(1) {
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); /* Specific shadow for the first rectangle */
+        }
+
+        .shapes svg rect:nth-child(2) {
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); /* Specific shadow for the second rectangle */
+        }
+
+        .shapes svg rect:nth-child(3) {
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); /* Specific shadow for the third rectangle */
+        }
+
+        .shapes svg circle {
+            filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.2)); /* Adding shadow for the circle */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <h2>Sign in</h2>
+            <input type="text" class="input-field" placeholder="Username">
+            <input type="email" class="input-field" placeholder="Email">
+            <input type="password" class="input-field" placeholder="Password">
+            <button class="google-button">
+                <img src="https://www.google.com/images/icons/product/search-32.png" alt="Google Logo" width="24" height="24">
+                Continue with Google
+            </button>
+        </div>
+        <button class="button">All set ➔</button>
+        <div class="shapes">
+            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="76" viewBox="0 0 163 76" fill="none">
+                <rect x="48.9229" y="35.0226" width="34.75" height="34.75" fill="#7879F1"/>
+                <rect x="0.807373" y="35.0226" width="34.75" height="34.75" fill="white"/>
+                <rect x="131.338" y="29.0747" width="34.75" height="34.75" transform="rotate(26.6535 131.338 29.0747)" fill="#EF5DA8"/>
+                <circle cx="101.048" cy="17.6477" r="17.375" fill="#FCDDEC"/>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>

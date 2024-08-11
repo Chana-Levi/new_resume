@@ -1,0 +1,73 @@
+{
+    "personal_information": {
+        "name": "",
+        "contact_info": {
+            "email": "",
+            "phone_number": "",
+            "address": {
+                "street": "",
+                "city": "",
+                "state": "",
+                "postal_code": "",
+                "country": ""
+            }
+        },
+        "github": ""
+    },
+    "summary": "",
+    "professional_experience": [
+        {
+            "job_title": "",
+            "company": "",
+            "location": "",
+            "start_date": "",
+            "end_date": "",
+            "responsibilities": []
+        }
+    ],
+    "education": [
+        {
+            "degree": "",
+            "institution": "",
+            "graduation_date": ""
+        }
+    ],
+    "skills": [],
+    "certifications": [
+        {
+            "name": "",
+            "issuing_organization": "",
+            "issue_date": ""
+        }
+    ],
+    "projects": [
+        {
+            "title": "",
+            "description": "",
+            "technologies_used": []
+        }
+    ],
+    "languages": [
+        {
+            "language": "",
+            "proficiency_level": ""
+        }
+    ],
+    "publications": [
+        {
+            "title": "",
+            "publication_date": "",
+            "journal_or_conference": ""
+        }
+    ],
+    "volunteer_experience": [
+        {
+            "role": "",
+            "organization": "",
+            "location": "",
+            "start_date": "",
+            "end_date": "",
+            "responsibilities": []
+        }
+    ]
+}
