@@ -48,7 +48,7 @@ def dashboard():
             'candidate_name': candidate.get('name', 'No Name'),
             'job_number': job.get('job_number', 'No Job Number'),
             'job_title': job.get('job_title', 'No Title'),
-            'resume_id': resume['_id']
+            'resume_id': str(resume['_id'])
         })
 
     return render_template('dashboard.html', job_data=job_data, resume_data=resume_data, user_name=user_name)
