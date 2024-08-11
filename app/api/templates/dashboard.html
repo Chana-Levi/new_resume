@@ -211,7 +211,7 @@
     <div class="container">
         <div class="header">
             <div class="icon"></div>
-            <h1>Good afternoon, Yoel</h1>
+            <h1>Good afternoon, {{ user_name }}</h1>
         </div>
         <div class="search-bar">
             <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" viewBox="0 0 19 19" fill="none">
@@ -240,114 +240,53 @@
             </a>
         </div>
         <div class="table-container">
-            <div class="table table-left" style="background-color: #FFF8FB;">
-                <div class="table-header">
-                    <div class="table-title">Recent resumes</div>
-                    <div class="line"></div>
-                    <a href="#" class="see-all">See All
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
-                            <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
-                        </svg>
-                    </a>
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>David Boat</td>
-                            <td>1255489</td>
-                            <td>Web development</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                        <tr>
-                            <td>UI/UX designer</td>
-                            <td>0456792</td>
-                            <td>Design</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>Web development</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>Web development</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>Web development</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>Web development</td>
-                            <td><a href="#" class="link">See full resume</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="table table-left" style="background-color: #FFF8FB;">
+        <div class="table-header">
+            <div class="table-title">Recent Resumes</div>
+            <div class="line"></div>
+            <a href="#" class="see-all">See All
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                    <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
+                </svg>
+            </a>
+        </div>
+        <table>
+            <tbody>
+                {% for resume in resume_data %}
+                <tr>
+                    <td>{{ resume.candidate_name }}</td>
+                    <td>{{ resume.job_number }}</td>
+                    <td>{{ resume.job_title }}</td>
+                    <td><a class="link">See full resumes</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
             <div class="table table-right">
-                <div class="table-header">
-                    <div class="table-title">Current job openings</div>
-                    <div class="line"></div>
-                    <a href="{{ url_for('jobs_list_bp.jobs_list') }}" class="see-all">See All
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
-                            <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
-                        </svg>
-                    </a>
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>87 matches</td>
-                            <td><span class="status active">Active</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                        <tr>
-                            <td>UI/UX designer</td>
-                            <td>0456792</td>
-                            <td>87 matches</td>
-                            <td><span class="status pending">Pending</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>87 matches</td>
-                            <td><span class="status active">Active</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>87 matches</td>
-                            <td><span class="status active">Active</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>87 matches</td>
-                            <td><span class="status active">Active</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                        <tr>
-                            <td>Developer</td>
-                            <td>1256489</td>
-                            <td>87 matches</td>
-                            <td><span class="status active">Active</span></td>
-                            <td><a href="#" class="link">Open full details</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-header">
+            <div class="table-title">Recent Job Postings</div>
+            <div class="line"></div>
+            <a href="{{ url_for('jobs_list_bp.jobs_list') }}" class="see-all">See All
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                    <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
+                </svg>
+            </a>
+        </div>
+        <table>
+            <tbody>
+                {% for job in job_data %}
+                <tr>
+                    <td>{{ job.job_title }}</td>
+                    <td>{{ job.job_number }}</td>
+                    <td>{{ job.num_applicants }} matches</td>
+                    <td><span class="status active">Active</span></td>
+                    <td><a href="#" class="link">Open full details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
         </div>
     </div>
 </body>

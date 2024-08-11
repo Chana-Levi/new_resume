@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from app import db, oauth
 
 
-auth_bp = Blueprint('auth_bp', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth_bp', __name__, template_folder='../templates', url_prefix='/auth')
 
 
 @auth_bp.route('/', methods=['GET'])
@@ -42,7 +42,7 @@ def google_callback():
         session['user_name'] = user_info['name']
         session['user_email'] = user_info['email']
         session['user_picture'] = user_info.get('picture')
-    return redirect(url_for('navbar_bp.navbar'))
+    return redirect(url_for('dashboard_bp.dashboard'))
 
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
