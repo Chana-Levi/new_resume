@@ -156,7 +156,7 @@
         }
 
         .column-1 {
-            width: 100px;
+            width: 120px;
             flex-shrink: 0;
             color: #000;
             text-align: left;
@@ -168,7 +168,7 @@
         }
 
         .column-2 {
-            width: 80px;
+            width: 100px;
             flex-shrink: 0;
             color: #000;
             font-family: 'Urbanist', sans-serif;
@@ -179,7 +179,7 @@
         }
 
         .column-3 {
-            width: 100px;
+            width: 120px;
             flex-shrink: 0;
             color: #000;
             font-family: 'Urbanist', sans-serif;
@@ -191,7 +191,7 @@
 
         .column-4 {
             display: flex;
-            width: 120px;
+            width: 130px;
             height: 25px;
             justify-content: center;
             align-items: center;
@@ -208,7 +208,7 @@
         }
 
         .column-5 {
-            width: 200px;
+            width: 220px;
             flex-shrink: 0;
             color: #EF5DA8;
             font-family: 'Urbanist', sans-serif;
@@ -429,10 +429,11 @@
         </header>
         <div class="header-line"></div>
         <div class="table-container">
+            {% for job in jobs %}
             <div class="table-row">
-                <div class="column-1">Developer</div>
-                <div class="column-2">1254689</div>
-                <div class="column-3">87 matches</div>
+                <div class="column-1">{{ job.job_title }}</div>
+                <div class="column-2">{{ job.job_number }}</div>
+                <div class="column-3">{{ job.matches }} matches</div>
                 <div class="column-4">Active</div>
                 <a href="#" class="column-5">Upload resume to role</a>
                 <div class="column-6" onclick="toggleDetails(this)">
@@ -443,17 +444,17 @@
             </div>
             <div class="hidden-div">
                 <div class="top-line">
-                    <div class="column-1">Developer</div>
-                    <div class="column-2">1254689</div>
-                    <div class="column-3">87 matches</div>
+                    <div class="column-1">{{ job.job_title }}</div>
+                    <div class="column-2">{{ job.job_number }}</div>
+                    <div class="column-3">{{ job.matches }} matches</div>
                     <div class="column-4">Active</div>
                 </div>
                 <div class="additional-info">
-                    <span><strong>Job title:</strong> Full stack</span>
-                    <span><strong>Job number:</strong> 123465</span>
-                    <span><strong>Description:</strong> Full-time</span>
-                    <span><strong>Requirements:</strong> On-demand</span>
-                    <span><strong>Opening valid date:</strong> 01.09.2024</span>
+                    <span><strong>Job title:</strong> {{ job.job_title }}</span>
+                    <span><strong>Job number:</strong> {{ job.job_number }}</span>
+                    <span><strong>Description:</strong> {{ job.job_description|safe }}</span>
+                    <span><strong>Requirements:</strong> {{ job.requirements }}</span>
+                    <span><strong>Opening valid date:</strong> {{ job.valid_date }}</span>
                 </div>
                 <div class="button-container">
                     <button class="edit-btn">
@@ -470,19 +471,7 @@
                     </button>
                 </div>
             </div>
-            <!-- Repeat the above block for each row in the table -->
-            <div class="table-row">
-                <div class="column-1">UI/UX designer</div>
-                <div class="column-2">0456792</div>
-                <div class="column-3">14 matches</div>
-                <div class="column-4" style="background: #CCC; color: #333;">Pending</div>
-                <a href="#" class="column-5">Upload resume to role</a>
-                <div class="column-6" onclick="toggleDetails(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round" />
-                    </svg>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
