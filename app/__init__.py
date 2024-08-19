@@ -43,8 +43,6 @@ def create_app():
         'match': MatchModel(db_connect),
     }
 
-    print("DB Initialized: ", db)
-
     # Register blueprints
     from app.api.routes.auth_routes import auth_bp
     from app.api.routes.dashboard_routes import dashboard_bp
