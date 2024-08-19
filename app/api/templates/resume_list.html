@@ -1,113 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Openings</title>
+    <title>Resume List</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700&display=swap');
 
         body {
             font-family: 'Urbanist', sans-serif;
-            margin: 0;
             background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            margin-left: 80px;
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        .header {
+        header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
+            padding: 10px 0;
+            flex-wrap: wrap;
         }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #150F6B;
-        }
-
-        .header .search-bar {
+        .logo-container {
             display: flex;
             align-items: center;
-            width: 100%;
-            max-width: 400px;
+            flex-shrink: 0;
         }
 
-        .search-bar input {
-            flex: 1;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            outline: none;
-            font-size: 14px;
-            padding: 5px;
+        .pink-square {
+            width: 12px;
+            height: 12px;
+            transform: rotate(26.653deg);
+            background: #FCDDEC;
+            margin-right: 8px;
+        }
+
+        .circle {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            fill: #7879F1;
+            margin-right: 8px;
+        }
+
+        .logo-text {
+            color: #150F6B;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            color: #727171;
+            font-size: 18px;
+            margin-left: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-icon {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2px;
+            stroke: #727171;
             margin-right: 10px;
         }
 
-        .search-bar svg {
-            width: 16px;
-            height: 16px;
-            stroke: #727171;
+        .search-wrapper {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex-grow: 1;
         }
 
-        .job-list {
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 18px;
+            color: #727171;
+            background-color: transparent;
+            flex: 1;
+            padding: 5px 0;
+            border-bottom: 1px solid #727171;
+        }
+
+        .search-line {
+            width: 275px;
+            height: 1px;
+            background: #727171;
+        }
+
+        .header-line {
             width: 100%;
-            border-top: 1px solid #e0e0e0;
+            height: 1px;
+            background: #7879F1;
+            margin: 20px 0;
         }
 
-        .job-item {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 2fr 1fr;
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .table-row {
+            display: flex;
+            width: 100%;
             align-items: center;
-            padding: 15px 0;
+            gap: 20px;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            position: relative;
             border-bottom: 1px solid #e0e0e0;
         }
 
-        .job-title {
-            font-weight: bold;
-            color: #3e3c75;
+        .column-1 {
+            width: 120px;
+            flex-shrink: 0;
+            color: #000;
+            text-align: left;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
         }
 
-        .job-id,
-        .job-matches {
-            color: #3e3c75;
+        .column-2 {
+            width: 100px;
+            flex-shrink: 0;
+            color: #000;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
         }
 
-        .job-status {
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: white;
-            display: inline-block;
+        .column-5 {
+            width: 220px;
+            flex-shrink: 0;
+            color: #EF5DA8;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-decoration: underline;
+            margin-left: 15px;
         }
 
-        .job-status.active {
-            background-color: #7366f2;
-        }
-
-        .job-status.pending {
-            background-color: #c5c5c5;
-        }
-
-        .job-action {
-            text-align: right;
-        }
-
-        .job-action a {
-            color: #ff4f81;
-            text-decoration: none;
-            font-size: 14px;
-            margin-left: 20px;
-        }
-
-        .notification-wrapper {
-            position: relative;
+        .column-6 {
             width: 62px;
             height: 62px;
+            position: relative;
+        }
+
+        .delete-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 22px;
+            height: 22px;
+            background-color: transparent;
+            border: 1px solid #7879F1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .delete-btn svg {
+            fill: none;
+            stroke: #7879F1;
+            stroke-width: 2;
+        }
+
+        .column-6 svg {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
         }
 
         .notification-bell {
@@ -142,71 +231,271 @@
         .notification-dot.active {
             display: block;
         }
+
+        .delete-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 22px;
+            height: 22px;
+            background-color: transparent;
+            border: 1px solid #7879F1;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #F5F5F5;
+        }
+
+        .delete-btn svg {
+            fill: none;
+            stroke: #7879F1;
+            stroke-width: 2;
+        }
+
+        .delete-btn:hover svg {
+            stroke: #7879F1;
+        }
+
+
+        /* Hidden div styling */
+        .hidden-div {
+            display: none;
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+            border-radius: 0px 0px 15px 15px;
+            background: #F4F4FF;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expanded-row {
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .expanded-row .table-row {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        /* Icon that toggles hidden div */
+        .expanded-row .column-6 svg {
+            transform: rotate(44.986deg);
+            opacity: 0.9;
+            stroke: black;
+        }
+
+        .expanded-row::after {
+            display: none;
+        }
+
+        .hidden-div .top-line {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .hidden-div .additional-info {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            flex-grow: 1;
+            max-width: 70%;
+        }
+
+        .hidden-div .additional-info span {
+            color: #150F6B;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .delete-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 24px;
+            height: 24px;
+            background-color: white; /* White fill */
+            border: 1px solid #7879F1; /* Blue frame */
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #f5f5f5; /* Slightly darker white on hover */
+            border-color: #5f60c4; /* Slightly darker blue border on hover */
+        }
+
+        .delete-btn svg {
+            fill: none;
+            stroke: #7879F1; /* Blue icon */
+            stroke-width: 2;
+            width: 14px;
+            height: 14px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-container {
+                margin-top: 10px;
+                max-width: 100%;
+                margin-left: 0;
+            }
+
+            .table-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .table-row .column-1,
+            .table-row .column-2,
+            .table-row .column-5,
+            .table-row .column-6 {
+                width: 100%;
+                max-width: 100%;
+                gap: 10px;
+            }
+
+            .hidden-div {
+                flex-direction: column;
+            }
+
+            .hidden-div .top-line,
+            .hidden-div .additional-info {
+                flex-direction: column;
+                gap: 8px;
+                max-width: 100%;
+            }
+
+            .button-container {
+                flex-direction: row;
+                gap: 5px;
+                justify-content: flex-start;
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
     {% include 'nav.html' %}
     <div class="container">
-        <div class="header">
-            <h1>Job openings</h1>
-            <div class="search-bar">
-                <input type="text" placeholder="Search jobs">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" fill="none">
-                    <path d="M14.3269 14.44L17.8 17.8M16.68 8.84C16.68 13.1699 13.1699 16.68 8.84 16.68C4.51009 16.68 1 13.1699 1 8.84C1 4.51009 4.51009 1 8.84 1C13.1699 1 16.68 4.51009 16.68 8.84Z" stroke="#727171" stroke-width="2" stroke-linecap="round"/>
+        <header>
+            <div class="logo-container">
+                <div class="pink-square"></div>
+                <svg class="circle" xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                    <circle cx="6.59417" cy="6.9013" r="6.40583" transform="rotate(-180 6.59417 6.9013)" fill="#7879F1" />
                 </svg>
+                <div class="logo-text">Resume List</div>
             </div>
-        </div>
-        <div class="job-list" id="job-list">
-            <!-- Job items will be injected here by JavaScript -->
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" fill="none">
+                    <path d="M14.3269 14.44L17.8 17.8M16.68 8.84C16.68 13.1699 13.1699 16.68 8.84 16.68C4.51009 16.68 1 13.1699 1 8.84C1 4.51009 4.51009 1 8.84 1C13.1699 1 16.68 4.51009 16.68 8.84Z" stroke="#727171" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Search resumes">
+                    <div class="search-line"></div>
+                </div>
+            </div>
+        </header>
+        <div class="header-line"></div>
+        <div class="table-container">
+            {% for resume in resumes %}
+            <div class="table-row">
+                <div class="column-1">{{ resume.name }}</div>
+                <div class="column-2">{{ resume.job_number }}</div>
+                <a href="{{ resume.resume_link }}" class="column-5">View extracted resume</a>
+                <a href="{{ resume.resume_link }}" class="column-5">View full resume</a>
+                <button class="delete-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                        <path d="M3 5.5H17M7 5.5V4C7 3.44772 7.44772 3 8 3H12C12.5523 3 13 3.44772 13 4V5.5M9 8.5V15.5M11 8.5V15.5M5 5.5H15L16 17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17L5 5.5Z" />
+                    </svg>
+                </button>
+                <div class="column-6">
+                    <div class="notification-bell">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                            <circle cx="31" cy="31" r="30.622" fill="#F5F5F5" stroke="#FAE506" stroke-width="0.756098"/>
+                        </svg>
+                        <svg class="bell-icon" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none">
+                            <path d="M8.76733 27.6049L8.38928 26.9501H8.38928L8.76733 27.6049ZM7.69915 26.8017L6.94884 26.7084L7.69915 26.8017ZM6.85358 22.3088L6.19418 22.6789L6.19878 22.6868L6.85358 22.3088ZM5.57704 20.0342L6.23645 19.6641L6.23184 19.6562L5.57704 20.0342ZM25.6642 17.8495L26.0423 18.5043V18.5043L25.6642 17.8495ZM25.5191 16.5375L25.8273 15.8471L25.8273 15.8471L25.5191 16.5375ZM22.0898 13.5122L21.4302 13.8818L21.435 13.8902L22.0898 13.5122ZM20.8779 11.3495L21.5375 10.9798L21.5327 10.9714L20.8779 11.3495ZM8.75248 8.06956L8.37443 7.41477L8.75248 8.06956ZM16.7628 27.4989L17.1408 28.1537L16.7628 27.4989ZM8.44947 26.895C8.62088 25.517 8.5139 23.6724 7.50838 21.9308L6.19878 22.6868C6.99319 24.0628 7.09283 25.5507 6.94884 26.7084L8.44947 26.895ZM7.51294 21.9388L6.2364 19.6642L4.91769 20.4043L6.19423 22.6788L7.51294 21.9388ZM25.8273 15.8471C24.7786 15.3789 23.5498 14.5287 22.7446 13.1341L21.435 13.8902C22.4421 15.6346 23.9598 16.6694 25.2109 17.2279L25.8273 15.8471ZM22.7494 13.1425L21.5375 10.9799L20.2183 11.7191L21.4302 13.8818L22.7494 13.1425ZM21.5327 10.9714C18.867 6.35441 12.9771 4.7574 8.37443 7.41477L9.13052 8.72436C13.0041 6.48796 17.9716 7.8279 20.2231 11.7275L21.5327 10.9714ZM26.0423 18.5043C26.6211 18.17 26.7614 17.5446 26.7043 17.0823C26.6474 16.6212 26.3744 16.0913 25.8273 15.8471L25.2109 17.2279C25.1845 17.2162 25.179 17.2034 25.185 17.2124C25.1878 17.2167 25.1919 17.2242 25.1957 17.2349C25.1995 17.2455 25.2022 17.2568 25.2035 17.2676C25.2049 17.2785 25.2045 17.2861 25.2041 17.2897C25.2037 17.2933 25.2036 17.29 25.2071 17.2813C25.2107 17.2721 25.2184 17.257 25.2328 17.2397C25.2477 17.2218 25.2663 17.2061 25.2862 17.1947L26.0423 18.5043ZM6.23184 19.6562C4.01607 15.8183 5.31849 10.9252 9.13052 8.72436L8.37443 7.41477C3.83325 10.0366 2.29229 15.857 4.92224 20.4123L6.23184 19.6562ZM8.38928 26.9501C8.40975 26.9383 8.43325 26.9299 8.4567 26.926C8.47936 26.9222 8.49645 26.9233 8.50584 26.9248C8.51485 26.9262 8.51696 26.9278 8.51282 26.9259C8.50872 26.9241 8.50106 26.92 8.49147 26.9126C8.48194 26.9052 8.47276 26.8963 8.46493 26.8869C8.45708 26.8774 8.4523 26.8693 8.4498 26.8642C8.44452 26.8534 8.45321 26.865 8.44947 26.895L6.94884 26.7084C6.87372 27.3122 7.19754 27.8241 7.5675 28.1096C7.93794 28.3956 8.55721 28.5993 9.14538 28.2597L8.38928 26.9501ZM25.2862 17.1947L8.38928 26.9501L9.14538 28.2597L26.0423 18.5043L25.2862 17.1947ZM17.7631 22.4112C18.6103 23.8785 18.0562 25.879 16.3847 26.8441L17.1408 28.1537C19.4547 26.8178 20.3827 23.924 19.0727 21.6551L17.7631 22.4112ZM16.3847 26.8441C14.7132 27.8091 12.7037 27.2887 11.8565 25.8213L10.5469 26.5774C11.8569 28.8464 14.8269 29.4896 17.1408 28.1537L16.3847 26.8441ZM9.11432 4.65344C9.67252 5.62028 9.34126 6.85656 8.37443 7.41477L9.13052 8.72436C10.8206 7.74858 11.3997 5.58745 10.4239 3.89735L9.11432 4.65344ZM8.37443 7.41477C7.40759 7.97297 6.17131 7.64171 5.61311 6.67487L4.30351 7.43097C5.27929 9.12108 7.44042 9.70015 9.13052 8.72436L8.37443 7.41477ZM5.61311 6.67487C5.05491 5.70804 5.38617 4.47175 6.353 3.91355L5.5969 2.60395C3.9068 3.57973 3.32773 5.74086 4.30351 7.43097L5.61311 6.67487ZM6.353 3.91355C7.31983 3.35535 8.55612 3.68661 9.11432 4.65344L10.4239 3.89735C9.44814 2.20724 7.28701 1.62817 5.5969 2.60395L6.353 3.91355Z" fill="#150F6B"/>
+                        </svg>
+                        {% if resume.hasNotification %}
+                        <div class="notification-dot active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                                <circle cx="7.18293" cy="7.45124" r="7.18293" fill="#EF5DA8" />
+                            </svg>
+                        </div>
+                        {% else %}
+                        <div class="notification-dot">
+                            <!-- Empty div or alternative content if no notification -->
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
     <script>
-        const jobs = [
-            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true },
-            { title: 'UI/UX designer', id: '0456792', matches: 14, status: 'Pending', hasNotification: false },
-            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: false },
-            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true },
-            { title: 'UI/UX designer', id: '0456792', matches: 14, status: 'Pending', hasNotification: false },
-            { title: 'Developer', id: '1256489', matches: 87, status: 'Active', hasNotification: true }
-        ];
-
-        function renderJobs() {
-            const jobList = document.getElementById('job-list');
-            jobList.innerHTML = '';
-
-            jobs.forEach(job => {
-                const jobItem = document.createElement('div');
-                jobItem.className = 'job-item';
-
-                jobItem.innerHTML = `
-                    <div class="job-title">${job.title}</div>
-                    <div class="job-id">${job.id}</div>
-                    <div class="job-matches">${job.matches} matches</div>
-                    <div class="job-status ${job.status.toLowerCase()}">${job.status}</div>
-                    <div class="job-action"><a href="#">Upload resume to role</a></div>
-                    <div class="notification-wrapper">
-                        <div class="notification-bell">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
-                                <circle cx="31" cy="31" r="30.622" fill="#F5F5F5" stroke="#FAE506" stroke-width="0.756098"/>
-                            </svg>
-                            <svg class="bell-icon" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none">
-                                <path d="M8.76733 27.6049L8.38928 26.9501H8.38928L8.76733 27.6049ZM7.69915 26.8017L6.94884 26.7084L7.69915 26.8017ZM6.85358 22.3088L6.19418 22.6789L6.19878 22.6868L6.85358 22.3088ZM5.57704 20.0342L6.23645 19.6641L6.23184 19.6562L5.57704 20.0342ZM25.6642 17.8495L26.0423 18.5043V18.5043L25.6642 17.8495ZM25.5191 16.5375L25.8273 15.8471L25.8273 15.8471L25.5191 16.5375ZM22.0898 13.5122L21.4302 13.8818L21.435 13.8902L22.0898 13.5122ZM20.8779 11.3495L21.5375 10.9798L21.5327 10.9714L20.8779 11.3495ZM8.75248 8.06956L8.37443 7.41477L8.75248 8.06956ZM16.7628 27.4989L17.1408 28.1537L16.7628 27.4989ZM8.44947 26.895C8.62088 25.517 8.5139 23.6724 7.50838 21.9308L6.19878 22.6868C6.99319 24.0628 7.09283 25.5507 6.94884 26.7084L8.44947 26.895ZM7.51294 21.9388L6.2364 19.6642L4.91769 20.4043L6.19423 22.6788L7.51294 21.9388ZM25.8273 15.8471C24.7786 15.3789 23.5498 14.5287 22.7446 13.1341L21.435 13.8902C22.4421 15.6346 23.9598 16.6694 25.2109 17.2279L25.8273 15.8471ZM22.7494 13.1425L21.5375 10.9799L20.2183 11.7191L21.4302 13.8818L22.7494 13.1425ZM21.5327 10.9714C18.867 6.35441 12.9771 4.7574 8.37443 7.41477L9.13052 8.72436C13.0041 6.48796 17.9716 7.8279 20.2231 11.7275L21.5327 10.9714ZM26.0423 18.5043C26.6211 18.17 26.7614 17.5446 26.7043 17.0823C26.6474 16.6212 26.3744 16.0913 25.8273 15.8471L25.2109 17.2279C25.1845 17.2162 25.179 17.2034 25.185 17.2124C25.1878 17.2167 25.1919 17.2242 25.1957 17.2349C25.1995 17.2455 25.2022 17.2568 25.2035 17.2676C25.2049 17.2785 25.2045 17.2861 25.2041 17.2897C25.2037 17.2933 25.2036 17.29 25.2071 17.2813C25.2107 17.2721 25.2184 17.257 25.2328 17.2397C25.2477 17.2218 25.2663 17.2061 25.2862 17.1947L26.0423 18.5043ZM6.23184 19.6562C4.01607 15.8183 5.31849 10.9252 9.13052 8.72436L8.37443 7.41477C3.83325 10.0366 2.29229 15.857 4.92224 20.4123L6.23184 19.6562ZM8.38928 26.9501C8.40975 26.9383 8.43325 26.9299 8.4567 26.926C8.47936 26.9222 8.49645 26.9233 8.50584 26.9248C8.51485 26.9262 8.51696 26.9278 8.51282 26.9259C8.50872 26.9241 8.50106 26.92 8.49147 26.9126C8.48194 26.9052 8.47276 26.8963 8.46493 26.8869C8.45708 26.8774 8.4523 26.8693 8.4498 26.8642C8.44452 26.8534 8.45321 26.865 8.44947 26.895L6.94884 26.7084C6.87372 27.3122 7.19754 27.8241 7.5675 28.1096C7.93794 28.3956 8.55721 28.5993 9.14538 28.2597L8.38928 26.9501ZM25.2862 17.1947L8.38928 26.9501L9.14538 28.2597L26.0423 18.5043L25.2862 17.1947ZM17.7631 22.4112C18.6103 23.8785 18.0562 25.879 16.3847 26.8441L17.1408 28.1537C19.4547 26.8178 20.3827 23.924 19.0727 21.6551L17.7631 22.4112ZM16.3847 26.8441C14.7132 27.8091 12.7037 27.2887 11.8565 25.8213L10.5469 26.5774C11.8569 28.8464 14.8269 29.4896 17.1408 28.1537L16.3847 26.8441ZM9.11432 4.65344C9.67252 5.62028 9.34126 6.85656 8.37443 7.41477L9.13052 8.72436C10.8206 7.74858 11.3997 5.58745 10.4239 3.89735L9.11432 4.65344ZM8.37443 7.41477C7.40759 7.97297 6.17131 7.64171 5.61311 6.67487L4.30351 7.43097C5.27929 9.12108 7.44042 9.70015 9.13052 8.72436L8.37443 7.41477ZM5.61311 6.67487C5.05491 5.70804 5.38617 4.47175 6.353 3.91355L5.5969 2.60395C3.9068 3.57973 3.32773 5.74086 4.30351 7.43097L5.61311 6.67487ZM6.353 3.91355C7.31983 3.35535 8.55612 3.68661 9.11432 4.65344L10.4239 3.89735C9.44814 2.20724 7.28701 1.62817 5.5969 2.60395L6.353 3.91355Z" fill="#150F6B"/>
-                            </svg>
-                        </div>
-                        <div class="notification-dot ${job.hasNotification ? 'active' : ''}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
-                                <circle cx="7.18293" cy="7.45124" r="7.18293" fill="#EF5DA8"/>
-                            </svg>
-                        </div>
-                    </div>
-                `;
-
-                jobList.appendChild(jobItem);
+        // Initial hide of hidden-div
+        document.addEventListener("DOMContentLoaded", function() {
+            const hiddenDivs = document.querySelectorAll('.hidden-div');
+            hiddenDivs.forEach(div => {
+                div.style.display = 'none';
             });
-        }
+        });
 
-        window.onload = renderJobs;
+        function toggleDetails(iconElement) {
+            const hiddenDiv = iconElement.closest('.table-row').nextElementSibling;
+            const isHidden = hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '';
+            const svg = iconElement.querySelector('svg');
+
+            if (isHidden) {
+                hiddenDiv.style.display = 'flex';
+                svg.outerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34" viewBox="0 0 35 34" fill="none">
+                    <g opacity="0.9">
+                        <path d="M12.7176 16.9717L22.2636 16.9694M11.1282 23.3361C7.61261 19.8222 7.6112 14.1237 11.1251 10.6082C14.6389 7.09257 20.3374 7.09117 23.853 10.605C27.3686 14.1189 27.37 19.8174 23.8561 23.3329C20.3423 26.8485 14.6438 26.8499 11.1282 23.3361Z" stroke="black" stroke-width="2" stroke-linecap="round" />
+                    </g>
+                </svg>`;
+            } else {
+                hiddenDiv.style.display = 'none';
+                svg.outerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round" />
+                </svg>`;
+            }
+        }
     </script>
 </body>
+
 </html>
