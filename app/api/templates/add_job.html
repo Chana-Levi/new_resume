@@ -32,6 +32,7 @@
             margin: auto;
             position: relative;
         }
+
         .form-control {
             display: block;
             width: 100%;
@@ -50,6 +51,7 @@
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
             border: 1px solid #7879F1;
         }
+
         .btn-pink {
             background-color: #FF4081;
             color: white;
@@ -116,51 +118,6 @@
             width: 100%;
         }
 
-        .requirements-container {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            border-radius: 0.9375rem;
-            border: 1px solid #7879F1;
-            background: #FFF;
-            padding: 1.6875rem 2.75rem;
-            height: 16.6875rem;
-            align-items: flex-start;
-            gap: 0.625rem;
-            flex-shrink: 0;
-            align-self: stretch;
-        }
-
-        .requirements-label {
-            position: absolute;
-            top: -25px;
-            right: -25px;
-            background-color: #FF4081;
-            color: white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .requirements-input {
-            width: 100%;
-        }
-
-        .requirements-textarea {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .requirements-textarea textarea {
-            width: 100%;
-            margin: 5px 0;
-        }
     </style>
 </head>
 
@@ -186,17 +143,13 @@
                         </div>
                     </div>
                     <div class="form-column">
-                        <div class="form-group requirements-container">
+                        <div class="form-group">
                             <label for="requirements" class="form-label">Requirements</label>
-                            <div class="requirements-label">T</div>
-                            <div class="requirements-input">
-                                <textarea class="form-control" id="requirements" name="requirements" rows="3">{{ request.args.get('requirements', '') }}</textarea>
-                            </div>
+                            <textarea class="form-control" id="requirements" name="requirements" rows="3">{{ request.args.get('requirements', '') }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="openingDate" class="form-label">Opening valid date</label>
-                            <input type="text" class="form-control" id="openingDate" name="opening_valid_date" placeholder="MM/DD/YYYY" value="{{ request.args.get('opening_valid_date', '') }}">
-
+                            <label for="opening_valid_date" class="form-label">Opening valid date</label>
+                            <input type="date" class="form-control" id="opening_valid_date" name="opening_valid_date" placeholder="DD/MM/YYYY" value="{{ request.args.get('opening_valid_date', '') }}">
                         </div>
                     </div>
                 </div>

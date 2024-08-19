@@ -50,7 +50,7 @@ def create_app():
     from app.api.routes.jobs_list_routes import jobs_list_bp
     from app.api.routes.matching_routes import matching_bp
     from app.api.routes.monitoring_routes import monitoring_bp
-    # from app.api.routes.nav_bar import navbar_bp
+    from app.api.routes.aaa import aaa_bp
     from app.api.routes.resume import resume_bp
     from app.api.routes.nav import nav_bp
     from app.api.routes.resume_list import resume_list_bp
@@ -62,7 +62,7 @@ def create_app():
     app.register_blueprint(matching_bp)
     app.register_blueprint(monitoring_bp)
     app.register_blueprint(resume_list_bp)
-    # app.register_blueprint(navbar_bp)
+    app.register_blueprint(aaa_bp)
     app.register_blueprint(resume_bp)
     app.register_blueprint(nav_bp)
 

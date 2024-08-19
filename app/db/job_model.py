@@ -5,7 +5,7 @@ class JobModel:
     def __init__(self, db):
         self.jobs = db['jobs']
 
-    def add_job(self, company_name, job_title, job_number, job_description, link, mandatory_requirements=None,
+    def add_job(self, company_name, job_title, job_number, job_description, link, date, mandatory_requirements=None,
                 general_requirements=None, advantageous_requirements=None):
         if advantageous_requirements is None:
             advantageous_requirements = []
@@ -21,7 +21,8 @@ class JobModel:
             "mandatory_requirements": mandatory_requirements,
             "advantageous_requirements": advantageous_requirements,
             "job_description": job_description,
-            "link_to_file": link
+            "link_to_file": link,
+            "opening_valid_date": date
         }
         return self.jobs.insert_one(job).inserted_id
 

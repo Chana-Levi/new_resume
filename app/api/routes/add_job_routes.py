@@ -31,8 +31,6 @@ def add_job():
     )
 
 
-
-
 @add_job_bp.route('/job_content', methods=['POST'])
 def job_content():
     """
@@ -48,6 +46,8 @@ def job_content():
     job_description = request.form['job_description']
     job_number = request.form['job_number']
     requirements = request.form['requirements']
+    date = request.form['opening_valid_date']
+    print("date", date)
 
     # Validate that all fields are filled
     if not job_title or not job_description or not job_number:
@@ -76,7 +76,7 @@ def job_content():
     advantageous_requirements = extracted_details.get('advantageous_requirements', [])
     link_to_file = extracted_details.get('link_to_file', '')
     job_model = db['job']
-    job_id = job_model.add_job(company_name, job_title, job_number, job_description, link_to_file,
+    job_id = job_model.add_job(company_name, job_title, job_number, job_description, link_to_file, date,
                                mandatory_requirements,
                                general_requirements, advantageous_requirements)
     if not job_id:
@@ -97,4 +97,3 @@ def job_confirmation():
     job_title = request.args.get('job_title')
     job_number = request.args.get('job_number')
     return render_template('job_confirmation.html', job_title=job_title, job_number=job_number)
-
