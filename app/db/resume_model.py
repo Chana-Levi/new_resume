@@ -42,3 +42,6 @@ class ResumeModel:
 
     def find_resume(self, candidate_id, job_id):
         return self.resumes.find_one({'candidate_id': ObjectId(candidate_id), 'job_id': ObjectId(job_id)})
+
+    def get_all(self):
+        return self.resumes.find()

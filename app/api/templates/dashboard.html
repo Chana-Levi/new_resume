@@ -9,7 +9,7 @@
         body {
             font-family: 'Urbanist', sans-serif;
             display: flex;
-            flex-direction: row; /* שינוי חשוב */
+            flex-direction: row;
             margin: 0;
             background-color: #fff;
         }
@@ -244,11 +244,12 @@
         <div class="table-header">
             <div class="table-title">Recent Resumes</div>
             <div class="line"></div>
-            <a href="#" class="see-all">See All
+            <a href="{{ url_for('resume_list_bp.resume_list') }}" class="see-all">See All
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
                     <path d="M14.7071 8.70711C15.0976 8.31658 15.0976 7.68342 14.7071 7.29289L8.34315 0.928932C7.95262 0.538408 7.31946 0.538408 6.92893 0.928932C6.53841 1.31946 6.53841 1.95262 6.92893 2.34315L12.5858 8L6.92893 13.6569C6.53841 14.0474 6.53841 14.6805 6.92893 15.0711C7.31946 15.4616 7.95262 15.4616 8.34315 15.0711L14.7071 8.70711ZM0 9H14V7H0V9Z" fill="#EF5DA8"/>
                 </svg>
             </a>
+
         </div>
         <table>
             <tbody>
