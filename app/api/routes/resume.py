@@ -7,7 +7,6 @@ resume_bp = Blueprint('resume_bp', __name__, url_prefix='/resume')
 
 @resume_bp.route('/', methods=['GET'])
 def show_resume():
-    # resume = db['resume'].resumes.find_one({}, sort=[('date_uploaded', -1)])
     resume_id = request.args.get('resume_id')
 
     if not resume_id:
@@ -15,11 +14,6 @@ def show_resume():
 
     resume = db['resume'].resumes.find_one({"_id": ObjectId(resume_id)})
 
-    # resume_id = db['resume'].resumes.find().sort('date_uploaded', -1).limit(1)
-    # resume_id = resume.get('_id')
-    # resume = db['resume'].resumes.find_one({"_id": ObjectId(resume_id)})
-
-    # Extracting the data from the 'extract_resume' field
     extract_resume = resume.get('extract_resume', {})
 
     # Breaking down the dictionary for easy access in the template
@@ -29,7 +23,11 @@ def show_resume():
     education = extract_resume.get('education', [])
     skills = extract_resume.get('skills', [])
     tools = extract_resume.get('tools', [])
+    certifications = extract_resume.get('certifications', [])
+    projects = extract_resume.get('projects', [])
     languages = extract_resume.get('languages', [])
+    publications = extract_resume.get('publications', [])
+    volunteer_experience = extract_resume.get('volunteer_experience', [])
 
     # Pass the data to the template
     return render_template("resume.html",
@@ -39,4 +37,8 @@ def show_resume():
                            education=education,
                            skills=skills,
                            tools=tools,
-                           languages=languages)
+                           certifications=certifications,
+                           projects=projects,
+                           languages=languages,
+                           publications=publications,
+                           volunteer_experience=volunteer_experience)

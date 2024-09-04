@@ -1,5 +1,6 @@
 # app/__init__.py
 from flask import Flask
+import os
 from authlib.integrations.flask_client import OAuth
 from config import Config
 from app.db.mongo_connection import db_connection
@@ -10,6 +11,7 @@ from app.db.candidate_model import CandidateModel
 from app.db.organization_model import OrganizationModel
 from app.db.mongo_connection import MongoDB
 
+
 oauth = OAuth()
 db = {}
 
@@ -18,6 +20,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     oauth.init_app(app)
+
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
 
     oauth.register(
         name='google',
@@ -54,6 +59,7 @@ def create_app():
     from app.api.routes.resume import resume_bp
     from app.api.routes.nav import nav_bp
     from app.api.routes.resume_list import resume_list_bp
+    from app.api.routes.full_resume import full_resume_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
@@ -64,6 +70,7 @@ def create_app():
     app.register_blueprint(resume_list_bp)
     app.register_blueprint(aaa_bp)
     app.register_blueprint(resume_bp)
+    app.register_blueprint(full_resume_bp)
     app.register_blueprint(nav_bp)
 
     # Assign db and oauth to app

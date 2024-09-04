@@ -432,13 +432,16 @@
             <div class="table-row">
                 <div class="column-1">{{ resume.name }}</div>
                 <div class="column-2">{{ resume.job_number }}</div>
-                <a href="{{ resume.resume_link }}" class="column-5">View extracted resume</a>
                 <a href="{{ resume.resume_link }}" class="column-5">View full resume</a>
-                <button class="delete-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
-                        <path d="M3 5.5H17M7 5.5V4C7 3.44772 7.44772 3 8 3H12C12.5523 3 13 3.44772 13 4V5.5M9 8.5V15.5M11 8.5V15.5M5 5.5H15L16 17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17L5 5.5Z" />
-                    </svg>
-                </button>
+                <a href="{{ resume.resume_link }}" class="column-5">View extracted resume</a>
+                <form action="{{ url_for('resume_list_bp.delete_resume', resume_id=resume.id) }}" method="POST" style="margin: 0;">
+                    <input type="hidden" name="job_id" value="{{ resume.job_id }}">
+                    <button class="delete-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                            <path d="M3 5.5H17M7 5.5V4C7 3.44772 7.44772 3 8 3H12C12.5523 3 13 3.44772 13 4V5.5M9 8.5V15.5M11 8.5V15.5M5 5.5H15L16 17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17L5 5.5Z" />
+                        </svg>
+                    </button>
+                </form>
                 <div class="column-6">
                     <div class="notification-bell">
                         <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
