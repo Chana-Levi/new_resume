@@ -37,3 +37,5 @@ class JobModel:
             {'_id': ObjectId(job_id)},
             {'$set': {'job_title': job_title, 'job_number': job_number, 'job_description': job_description}}
         )
+
+

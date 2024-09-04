@@ -129,7 +129,7 @@
 
         .create-job-btn a {
             text-decoration: none;
-            color: inherit; /* לשמור על הצבע הקיים */
+            color: inherit;
         }
 
         .create-job-btn svg {
@@ -302,12 +302,32 @@
         }
 
         .hidden-div .additional-info span {
-            color: #150F6B;
             font-family: 'Urbanist', sans-serif;
             font-size: 15px;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
+        }
+
+        .edit-input {
+            display: block;
+            width: 100%;
+            font-size: 15px;
+            font-family: 'Urbanist', sans-serif;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .edit-input[type="text"] {
+            height: auto;
+            min-height: 30px;
+        }
+
+        .edit-input textarea {
+            height: auto;
+            overflow: hidden;
+            min-height: 50px;
+            resize: none; /* Disable manual resize */
         }
 
         .button-container {
@@ -316,10 +336,24 @@
             align-items: flex-start;
             gap: 10px;
             margin-left: auto;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .button-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0.80px;
+            background-color: #150F6B;
+            stroke-width: 10.25px;
         }
 
         .edit-btn,
-        .delete-btn {
+        .delete-btn,
+        .save-btn {
             display: flex;
             width: 186px;
             height: 39px;
@@ -410,9 +444,35 @@
     {% include 'nav.html' %}
     <div class="container">
         <header>
-            <!-- ... כל שאר הקוד ... -->
+            <div class="logo-container">
+                <div class="pink-square"></div>
+                <svg class="circle" xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                    <circle cx="6.59417" cy="6.9013" r="6.40583" transform="rotate(-180 6.59417 6.9013)" fill="#7879F1" />
+                </svg>
+                <div class="logo-text">Job openings</div>
+            </div>
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" fill="none">
+                    <path d="M14.3269 14.44L17.8 17.8M16.68 8.84C16.68 13.1699 13.1699 16.68 8.84 16.68C4.51009 16.68 1 13.1699 1 8.84C1 4.51009 4.51009 1 8.84 1C13.1699 1 16.68 4.51009 16.68 8.84Z" stroke="#727171" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Search jobs">
+                    <div class="search-line"></div>
+                </div>
+            </div>
+            <button class="create-job-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                    <path d="M12.3883 7.38842C12.3883 6.88381 11.9792 6.47474 11.4746 6.47474C10.97 6.47474 10.5609 6.88381 10.5609 7.38842H12.3883ZM10.5609 15.6115C10.5609 16.1162 10.97 16.5252 11.4746 16.5252C11.9792 16.5252 12.3883 16.1162 12.3883 15.6115H10.5609ZM15.5862 12.4137C16.0908 12.4137 16.4998 12.0046 16.4998 11.5C16.4998 10.9954 16.0908 10.5863 15.5862 10.5863V12.4137ZM7.36303 10.5863C6.85842 10.5863 6.44935 10.9954 6.44935 11.5C6.44935 12.0046 6.85842 12.4137 7.36303 12.4137V10.5863ZM18.784 11.5C18.784 15.5369 15.5115 18.8094 11.4746 18.8094V20.6368C16.5207 20.6368 20.6114 16.5461 20.6114 11.5H18.784ZM11.4746 18.8094C7.4377 18.8094 4.16515 15.5369 4.16515 11.5H2.33778C2.33778 16.5461 6.42847 20.6368 11.4746 20.6368V18.8094ZM4.16515 11.5C4.16515 7.46309 7.4377 4.19054 11.4746 4.19054V2.36317C6.42847 2.36317 2.33778 6.45386 2.33778 11.5H4.16515ZM11.4746 4.19054C15.5115 4.19054 18.784 7.46309 18.784 11.5H20.6114C20.6114 6.45386 16.5207 2.36317 11.4746 2.36317V4.19054ZM10.5609 7.38842L10.5609 11.5H12.3883L12.3883 7.38842H10.5609ZM10.5609 11.5V15.6115H12.3883V11.5H10.5609ZM15.5862 10.5863H11.4746V12.4137H15.5862V10.5863ZM11.4746 10.5863H7.36303V12.4137H11.4746V10.5863Z" fill="#7879F1" />
+                </svg>
+                Create new job opening
+            </button>
         </header>
         <div class="header-line"></div>
+        <form id="resume-upload-form" action="{{ url_for('jobs_list_bp.upload_resume') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+            <input type="hidden" name="job_id" id="job_id">
+            <input type="file" name="resume" id="resume-input" onchange="submitResume()">
+        </form>
+
         <div class="table-container">
             {% for job in jobs %}
             <div class="table-row">
@@ -420,29 +480,47 @@
                 <div class="column-2">{{ job.job_number }}</div>
                 <div class="column-3">{{ job.matches }} matches</div>
                 <div class="column-4">Active</div>
-                <a href="#" class="column-5" onclick="triggerFileUpload(this, '{{ job._id }}')">Upload resume to role</a>
+                <a href="javascript:void(0);" class="column-5" onclick="triggerFileUpload(this, '{{ job._id }}')">Upload resume to role</a>
                 <div class="column-6" onclick="toggleDetails(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round" />
+                        <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round"/>
                     </svg>
                 </div>
             </div>
-            <div class="hidden-div">
+            <div class="hidden-div" style="display: none;">
                 <div class="additional-info">
-                    <span><strong>Job title:</strong> {{ job.job_title }}</span>
+                    <!-- Job title with an input field for editing -->
+                    <span><strong>Job title:</strong> <span class="editable-text" data-key="job_title">{{ job.job_title }}</span>
+                        <input type="text" class="edit-input" name="edit-job-title" value="{{ job.job_title }}" style="display:none;"></span>
+
+                    <!-- Job number (assuming it's not editable) -->
                     <span><strong>Job number:</strong> {{ job.job_number }}</span>
-                    <span><strong>Opening valid date:</strong> {{ job.valid_date }}</span>
-                    <span><strong>Description:</strong> {{ job.job_description|safe }}</span>
-                    <span><strong>Requirements:</strong> {{ job.requirements }}</span>
+
+                    <!-- Valid date with an input field for editing -->
+                    <span><strong>Opening valid date:</strong> <span class="editable-text" data-key="valid_date">{{ job.valid_date }}</span>
+                        <input type="text" class="edit-input" name="edit-valid-date" value="{{ job.valid_date }}" style="display:none;"></span>
+
+                    <!-- Description with a textarea for editing -->
+                    <span><strong>Description:</strong> <span class="editable-text" data-key="job_description">{{ job.job_description|safe }}</span>
+                        <textarea class="edit-input" name="edit-job-description" style="display:none;">{{ job.job_description|safe }}</textarea></span>
+
+                    <!-- Requirements with a textarea for editing -->
+                    <span><strong>Requirements:</strong> <span class="editable-text" data-key="requirements">{{ job.requirements }}</span>
+                        <textarea class="edit-input" name="edit-requirements" style="display:none;">{{ job.requirements }}</textarea></span>
                 </div>
+
+                <!-- Buttons for editing, saving, and deleting -->
                 <div class="button-container">
-                    <button class="edit-btn">
+                    <button class="edit-btn" onclick="toggleEditMode(this)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                             <path d="M11.3247 15.4783H15.8247M4.12476 15.4783L7.39924 14.7819C7.57308 14.7449 7.73269 14.6545 7.85804 14.5221L15.1883 6.7804C15.5397 6.40922 15.5395 5.80757 15.1878 5.4367L13.635 3.79948C13.2834 3.42876 12.7137 3.42902 12.3623 3.80004L5.03133 11.5426C4.90622 11.6747 4.82079 11.8429 4.78573 12.026L4.12476 15.4783Z" stroke="#EF5DA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         Edit job details
                     </button>
-                    <button class="delete-btn">
+                    <button class="save-btn" style="display:none;" onclick="saveEditMode(this, '{{ job._id }}')">
+                        Save
+                    </button>
+                    <button class="delete-btn" onclick="deleteJob('{{ job._id }}', this)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
                             <path d="M3.7915 5.63492H17.1584M7.96865 2.9812H12.9812M13.3989 18.0189H7.55093C6.62814 18.0189 5.88008 17.2268 5.88008 16.2498L5.49862 6.55631C5.47884 6.05377 5.85828 5.63492 6.33332 5.63492H14.6165C15.0916 5.63492 15.471 6.05377 15.4512 6.55631L15.0698 16.2498C15.0698 17.2268 14.3217 18.0189 13.3989 18.0189Z" stroke="#EF5DA8" stroke-width="1.67086" stroke-linecap="round" />
                         </svg>
@@ -454,35 +532,186 @@
         </div>
     </div>
 
-    <script>
-        // Initial hide of hidden-div
-        document.addEventListener("DOMContentLoaded", function() {
-            const hiddenDivs = document.querySelectorAll('.hidden-div');
-            hiddenDivs.forEach(div => {
-                div.style.display = 'none';
-            });
+<script>
+    function adjustTextareaHeight(textarea) {
+        textarea.style.height = "auto"; // Reset the height
+        textarea.style.height = (textarea.scrollHeight) + "px"; // Set the height to match the scroll height
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const editInputs = document.querySelectorAll('.edit-input');
+
+        editInputs.forEach(input => {
+            if (input.tagName.toLowerCase() === 'textarea') {
+                adjustTextareaHeight(input); // Adjust the height on page load
+                input.addEventListener('input', () => adjustTextareaHeight(input)); // Adjust the height on input
+            }
+        });
+    });
+
+    function sanitizeHtmlInput(input) {
+        const div = document.createElement('div');
+        div.innerHTML = input;
+        return div.textContent || div.innerText || "";
+    }
+
+    function toggleDetails(iconElement) {
+        const hiddenDiv = iconElement.closest('.table-row').nextElementSibling;
+        const isHidden = hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '';
+        const svg = iconElement.querySelector('svg');
+
+        if (isHidden) {
+            hiddenDiv.style.display = 'flex';
+            svg.outerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34" viewBox="0 0 35 34" fill="none">
+                <g opacity="0.9">
+                    <path d="M12.7176 16.9717L22.2636 16.9694M11.1282 23.3361C7.61261 19.8222 7.6112 14.1237 11.1251 10.6082C14.6389 7.09257 20.3374 7.09117 23.853 10.605C27.3686 14.1189 27.37 19.8174 23.8561 23.3329C20.3423 26.8485 14.6438 26.8499 11.1282 23.3361Z" stroke="black" stroke-width="2" stroke-linecap="round" />
+                </g>
+            </svg>`;
+        } else {
+            hiddenDiv.style.display = 'none';
+            svg.outerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>`;
+        }
+    }
+
+    function triggerFileUpload(element, jobId) {
+        const jobInput = document.getElementById('job_id');
+        const fileInput = document.getElementById('resume-input');
+
+        // Set the job ID in the hidden form
+        jobInput.value = jobId;
+
+        // Trigger the file input click
+        fileInput.click();
+    }
+
+    function submitResume() {
+        const form = document.getElementById('resume-upload-form');
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+            } else if (data.error) {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('An error occurred: ' + error.message);
+        });
+    }
+
+    function toggleEditMode(button) {
+        const hiddenDiv = button.closest('.hidden-div');
+        const editableTexts = hiddenDiv.querySelectorAll('.editable-text');
+        const editInputs = hiddenDiv.querySelectorAll('.edit-input');
+        const editButton = hiddenDiv.querySelector('.edit-btn');
+        const saveButton = hiddenDiv.querySelector('.save-btn');
+        const deleteButton = hiddenDiv.querySelector('.delete-btn');
+
+        editInputs.forEach((input, index) => {
+            const originalText = editableTexts[index].textContent.trim();
+            input.style.width = `${editableTexts[index].offsetWidth}px`;
+            input.style.height = `${editableTexts[index].offsetHeight}px`;
+            input.value = sanitizeHtmlInput(editableTexts[index].innerHTML.trim()); // Remove HTML tags from the text
         });
 
-        function toggleDetails(iconElement) {
-            const hiddenDiv = iconElement.closest('.table-row').nextElementSibling;
-            const isHidden = hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '';
-            const svg = iconElement.querySelector('svg');
+        // Toggle visibility of text and input fields
+        editableTexts.forEach(text => text.style.display = 'none');
+        editInputs.forEach(input => {
+            input.style.display = 'block';
+            adjustTextareaHeight(input); // Adjust height when switching to edit mode
+        });
 
-            if (isHidden) {
-                hiddenDiv.style.display = 'flex';
-                svg.outerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34" viewBox="0 0 35 34" fill="none">
-                    <g opacity="0.9">
-                        <path d="M12.7176 16.9717L22.2636 16.9694M11.1282 23.3361C7.61261 19.8222 7.6112 14.1237 11.1251 10.6082C14.6389 7.09257 20.3374 7.09117 23.853 10.605C27.3686 14.1189 27.37 19.8174 23.8561 23.3329C20.3423 26.8485 14.6438 26.8499 11.1282 23.3361Z" stroke="black" stroke-width="2" stroke-linecap="round" />
-                    </g>
-                </svg>`;
+        // Hide the delete button and switch edit to save
+        deleteButton.style.display = 'none';
+        editButton.style.display = 'none';
+        saveButton.style.display = 'block';
+    }
+
+    function saveEditMode(button, jobId) {
+        const hiddenDiv = button.closest('.hidden-div');
+        const editInputs = hiddenDiv.querySelectorAll('.edit-input');
+        const deleteButton = hiddenDiv.querySelector('.delete-btn');
+
+        // Collect updated data from input fields
+        const data = {
+            job_id: jobId
+        };
+
+        editInputs.forEach(input => {
+            const key = input.previousElementSibling.getAttribute('data-key');
+            data[key] = sanitizeHtmlInput(input.value);  // Sanitize the input to remove HTML tags
+        });
+
+        // Send updated data to server
+        fetch('/jobs_list/edit_job', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Job details updated successfully!');
+
+                // Update UI with new values
+                editInputs.forEach(input => {
+                    const key = input.previousElementSibling.getAttribute('data-key');
+                    input.previousElementSibling.textContent = sanitizeHtmlInput(input.value);  // Update UI without HTML tags
+                    input.style.display = 'none';
+                    input.previousElementSibling.style.display = 'block';
+                });
+
+                // Show the delete button and switch save to edit
+                button.style.display = 'none';
+                hiddenDiv.querySelector('.edit-btn').style.display = 'block';
+                deleteButton.style.display = 'block';
             } else {
-                hiddenDiv.style.display = 'none';
-                svg.outerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path d="M11.0198 6.85407L11.0198 10.7916M11.0198 10.7916V14.729M11.0198 10.7916H14.9573M11.0198 10.7916H7.08228M18.8948 5.8697L18.8948 15.7135C18.8948 17.3444 17.5726 18.6666 15.9416 18.6666H6.0979C4.46693 18.6666 3.14478 17.3444 3.14478 15.7135V5.8697C3.14478 4.23875 4.46693 2.9166 6.0979 2.9166H15.9417C17.5726 2.9166 18.8948 4.23875 18.8948 5.8697Z" stroke="#7879F1" stroke-width="1.75" stroke-linecap="round" />
-                </svg>`;
+                alert('Error: ' + data.error);
             }
-        }
-    </script>
+        })
+        .catch(error => {
+            alert('An error occurred: ' + error.message);
+        });
+    }
+
+    function deleteJob(jobId, button) {
+    if (confirm('Are you sure you want to delete this job?')) {
+        fetch('/jobs_list/delete_job', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ job_id: jobId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('An error occurred: ' + error.message);
+        });
+    }
+}
+</script>
 </body>
+</html>
+
+
+
+

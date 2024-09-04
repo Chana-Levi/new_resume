@@ -51,6 +51,7 @@ def create_app():
     from app.api.routes.matching_routes import matching_bp
     from app.api.routes.monitoring_routes import monitoring_bp
     from app.api.routes.aaa import aaa_bp
+    from app.api.routes.mishra_number import mishra_number_bp
     from app.api.routes.resume import resume_bp
     from app.api.routes.nav import nav_bp
     from app.api.routes.resume_list import resume_list_bp
@@ -65,6 +66,7 @@ def create_app():
     app.register_blueprint(aaa_bp)
     app.register_blueprint(resume_bp)
     app.register_blueprint(nav_bp)
+    app.register_blueprint(mishra_number_bp)
 
     # Assign db and oauth to app
     app.db = db

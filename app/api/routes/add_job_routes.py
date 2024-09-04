@@ -83,7 +83,7 @@ def job_content():
         flash("The job could not be added to the database.", "error")
         return render_template('add_job.html')
 
-    return redirect(url_for('add_job_bp.job_confirmation', job_title=job_title, job_number=job_number))
+    return redirect(url_for('add_job_bp.job_confirmation', job_title=job_title, job_number=job_number, description=job_description, requirements=requirements, date=date))
 
 
 @add_job_bp.route('/job_confirmation')
@@ -96,4 +96,7 @@ def job_confirmation():
     """
     job_title = request.args.get('job_title')
     job_number = request.args.get('job_number')
-    return render_template('job_confirmation.html', job_title=job_title, job_number=job_number)
+    description = request.args.get('description')
+    requirements = request.args.get('requirements')
+    date = request.args.get('date')
+    return render_template('job_confirmation.html', job_title=job_title, job_number=job_number, description=description, requirements=requirements, date=date)

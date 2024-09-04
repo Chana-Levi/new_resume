@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+
+        .container-wrapper {
+            position: relative;
+            width: 50.25rem;
+            height: 26.125rem;
+            background: #FFF; /* Background color */
+            border-radius: 0.9375rem; /* Border radius */
+            box-shadow: 1px 3px 4.8px 2px rgba(0, 0, 0, 0.10); /* Box shadow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .content {
+            position: relative;
+            width: 27.6875rem;
+            padding: 2.62rem 2rem;
+            text-align: center;
+        }
+
+        .icon-container {
+            position: absolute;
+            top: -3.37rem; /* Adjusted for spacing */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5.75rem;
+            height: 5.75rem;
+            background-color: #D7D7FE;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .icon-container svg {
+            width: 2.1546rem;
+            height: 2.22406rem;
+        }
+
+        h2 {
+            color: #EF5DA8;
+            font-size: 1.5rem;
+            margin: 1.81rem 0 2.62rem 0; /* Spacing above and below the header */
+        }
+
+        p {
+            color: #000; /* Updated color */
+            text-align: center; /* Centered text */
+            font-family: Urbanist; /* Font family */
+            font-size: 1.5rem; /* Font size */
+            font-style: normal; /* Font style */
+            font-weight: 500; /* Font weight */
+            line-height: normal; /* Line height */
+            margin-bottom: 2.62rem; /* Spacing below the paragraph */
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Align items to the right */
+            border-radius: 0.9375rem; /* Border radius from Figma */
+            border: 1px solid #7879F1; /* Border color from Figma */
+            background: #FFF;
+            width: 100%; /* Full width within the content box */
+            height: 3.125rem; /* Height from Figma */
+            margin-bottom: 2.62rem; /* Spacing below the input container */
+            position: relative; /* Positioning for dropdown button */
+        }
+
+        input[type="text"] {
+            border: none;
+            outline: none;
+            width: calc(100% - 3.125rem); /* Subtract button width to keep input and button aligned */
+            font-size: 1rem;
+            padding-left: 1rem;
+            color: #6A6A6A; /* Text color */
+        }
+
+        input[type="text"]::selection {
+            background-color: #EF5DA8;
+            color: white;
+        }
+
+        .dropdown-button {
+            background-color: #7879F1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 0.9375rem 0.9375rem 0; /* Rounded border on the right side */
+            width: 3.125rem; /* Width from Figma */
+            height: 100%; /* Full height of the input container */
+            cursor: pointer;
+        }
+
+        .dropdown-button svg {
+            width: 1rem;
+            height: 1rem;
+            fill: white;
+        }
+
+        .start-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Full width within the content box */
+            height: 3.1875rem; /* Height from the screenshot */
+            background-color: #EF5DA8;
+            color: white;
+            border: none;
+            border-radius: 2.506rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: #d94c92;
+        }
+
+        .start-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="content">
+            <div class="icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39 40" fill="none">
+                    <path d="M15.6074 37.7924H6.71117C4.25453 37.7924 2.26305 35.8009 2.26306 33.3443L2.26323 6.65562C2.26325 4.199 4.25474 2.20752 6.71136 2.20752H26.7284C29.185 2.20752 31.1765 4.19901 31.1765 6.65564V18.888M22.2803 31.491L26.3578 35.5685L36.7367 24.4481" stroke="black" stroke-width="3.70677" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2>Resume uploaded successfully!</h2>
+            <p>Link resume to job opening:</p>
+            <div class="input-container">
+                <input type="text" value="096352">
+                <div class="dropdown-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" fill="none">
+                        <path d="M7.29289 14.2071C7.68342 14.5976 8.31658 14.5976 8.70711 14.2071L15.0711 7.84315C15.4616 7.45262 15.4616 6.81946 15.0711 6.42893C14.6805 6.03841 14.0474 6.03841 13.6569 6.42893L8 12.0858L2.34315 6.42893C1.95262 6.03841 1.31946 6.03841 0.928932 6.42893C0.538408 6.81946 0.538407 7.45262 0.928932 7.84315L7.29289 14.2071ZM7 0.5L7 13.5L9 13.5L9 0.5L7 0.5Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+            <button class="start-button">
+                <span>Start role match filter</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                    <path d="M19.7795 11.5866L12.7739 21.82C12.421 22.3286 11.5907 22.1002 11.5907 21.4879L11.5803 15.6343C11.5803 14.9596 11.0095 14.42 10.3037 14.4096L6.1211 14.3577C5.61254 14.3473 5.31156 13.818 5.59179 13.4132L12.5974 3.1798C12.9503 2.67124 13.7806 2.89958 13.7806 3.51192L13.791 9.36554C13.791 10.0402 14.3618 10.5798 15.0676 10.5902L19.2502 10.6421C19.7484 10.6421 20.0493 11.1818 19.7795 11.5866Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
