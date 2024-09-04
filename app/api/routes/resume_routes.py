@@ -20,13 +20,6 @@ def resume_list():
     return render_template('resume_list.html', jobs=job_list, resumes=list(resumes), selected_job=selected_job)
 
 
-@resume_list_bp.route('/delete_resume/<resume_id>', methods=['POST'])
-def delete_resume(resume_id):
-    job_id = request.form['job_id']
-    db['resume'].delete_resume(resume_id)
-    return redirect(url_for('resume_list_bp.resume_list', job_id=job_id))
-
-
 @resume_list_bp.route('/view_resume/<resume_id>', methods=['GET'])
 def view_resume(resume_id):
     resume = db['resume'].get_resume(resume_id)

@@ -54,7 +54,7 @@
             margin-left: 10px;
             border-radius: 20px;
         }
-        .header .buttons .delete {
+        .header .buttons .edit {
             background-color: #ccc;
             color: black;
         }
@@ -113,6 +113,17 @@
             font-size: 16px;
             line-height: 1.6;
         }
+
+        /* The following styles are only applied when editing is enabled */
+        .editable[contenteditable="true"] {
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .editable[contenteditable="true"]:focus {
+            outline: none;
+        }
+
         @media (max-width: 768px) {
             .resume {
                 flex-direction: column;
@@ -123,10 +134,11 @@
         }
     </style>
     <script>
-        function confirmAction() {
-            if (confirm('Are you sure you want to confirm the resume upload?')) {
-                window.location.href = 'link';
-            }
+        function enableEditing() {
+            const sections = document.querySelectorAll('.editable');
+            sections.forEach(section => {
+                section.setAttribute('contenteditable', 'true');
+            });
         }
     </script>
 </head>
@@ -136,7 +148,7 @@
         <div class="main-content">
             <div class="header">
                 <div>
-                    <div class="info">
+                    <div class="info editable">
                         <p>&#9993; {{ personal_info.contact_info.email }}</p>
                         <p>&#9742; {{ personal_info.contact_info.phone_number }}</p>
                         <p>&#128205; {{ personal_info.contact_info.address.city }}, {{ personal_info.contact_info.address.country }}</p>
@@ -144,66 +156,132 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="delete" onclick="return confirm('Are you sure you want to delete the upload?')">Delete upload</button>
-                    <button class="confirm" onclick="confirmAction()">Confirm resume upload</button>
+                    <button class="edit" onclick="enableEditing()">Edit</button>
+{#                    <button class="confirm">Confirm</button>#}
                 </div>
             </div>
             <div class="resume">
                 <div class="left-column">
-                    <h2>{{ personal_info.name }}</h2>
-                    <p>{{ summary }}</p>
-                    <div class="section">
-                        <h3 class="section-title">Work Experience</h3>
-                        <div class="work-experience">
-                            {% for job in experience %}
-                                <p>{{ job.start_date }} - {{ job.end_date }}</p>
-                                <p><strong>{{ job.job_title }}</strong></p>
-                                <p>{{ job.company }}</p>
-                                <p>{{ job.location }}</p>
-                                <ul>
-                                    {% for responsibility in job.responsibilities %}
-                                        <li>{{ responsibility }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endfor %}
-                        </div>
+                    <h2 class="editable">{{ personal_info.name }}</h2>
+                    <p class="editable">{{ summary }}</p>
+
+                    <!-- Work Experience Section -->
+                    {% if professional_experience %}
+                    <h3 class="section-title">Work Experience</h3>
+                    <div class="section editable">
+                        {% for job in professional_experience %}
+                            <p><strong>{{ job.job_title }}</strong> at {{ job.company }}</p>
+                            <p>{{ job.location }}</p>
+                            <p>{{ job.start_date }} - {{ job.end_date }}</p>
+                            <ul>
+                                {% for responsibility in job.responsibilities %}
+                                    <li>{{ responsibility }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
                     </div>
+                    {% endif %}
+
+                    <!-- Projects Section -->
+                    {% if projects %}
+                    <h3 class="section-title">Projects</h3>
+                    <div class="section editable">
+                        {% for project in projects %}
+                            <p><strong>{{ project.title }}</strong></p>
+                            <p>{{ project.description }}</p>
+                            <p>Technologies used: {{ project.technologies_used | join(', ') }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Volunteer Experience Section -->
+                    {% if volunteer_experience %}
+                    <h3 class="section-title">Volunteer Experience</h3>
+                    <div class="section editable">
+                        {% for vol in volunteer_experience %}
+                            <p>{{ vol.role }} at {{ vol.organization }}</p>
+                            <p>{{ vol.location }}</p>
+                            <p>{{ vol.start_date }} - {{ vol.end_date }}</p>
+                            <ul>
+                                {% for responsibility in vol.responsibilities %}
+                                    <li>{{ responsibility }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
+
                 <div class="right-column">
-                    <div class="section education">
-                        <h3 class="section-title">Education</h3>
-                        <div class="list">
-                            {% for edu in education %}
-                                <p><strong>{{ edu.degree }}</strong></p>
-                                <p>{{ edu.institution }}</p>
-                                <p>{{ edu.graduation_date }}</p>
-                            {% endfor %}
-                        </div>
+                    <!-- Education Section -->
+                    {% if education %}
+                    <h3 class="section-title">Education</h3>
+                    <div class="section education editable">
+                        {% for edu in education %}
+                            <p><strong>{{ edu.degree }}</strong></p>
+                            <p>{{ edu.institution }}</p>
+                            <p>{{ edu.graduation_date }}</p>
+                        {% endfor %}
                     </div>
-                    <div class="section skills-competencies">
-                        <h3 class="section-title">Skills & Competencies</h3>
+                    {% endif %}
+
+                    <!-- Skills & Competencies Section -->
+                    {% if skills %}
+                    <h3 class="section-title">Skills & Competencies</h3>
+                    <div class="section skills-competencies editable">
                         <div class="list">
                             {% for skill in skills %}
                                 <p>{{ skill }}</p>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="section tools">
-                        <h3 class="section-title">Tools</h3>
+                    {% endif %}
+
+                    <!-- Tools Section -->
+                    {% if tools %}
+                    <h3 class="section-title">Tools</h3>
+                    <div class="section tools editable">
                         <div class="list">
                             {% for tool in tools %}
                                 <p>{{ tool }}</p>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="section language">
-                        <h3 class="section-title">Language</h3>
-                        <div class="list">
-                            {% for language in languages %}
-                                <p>{{ language.language }} - {{ language.proficiency_level }}</p>
-                            {% endfor %}
-                        </div>
+                    {% endif %}
+
+                    <!-- Certifications Section -->
+                    {% if certifications %}
+                    <h3 class="section-title">Certifications</h3>
+                    <div class="section certifications editable">
+                        {% for cert in certifications %}
+                            <p><strong>{{ cert.name }}</strong></p>
+                            <p>{{ cert.issuing_organization }}</p>
+                            <p>{{ cert.issue_date }}</p>
+                        {% endfor %}
                     </div>
+                    {% endif %}
+
+                    <!-- Languages Section -->
+                    {% if languages %}
+                    <h3 class="section-title">Languages</h3>
+                    <div class="section language editable">
+                        {% for language in languages %}
+                            <p>{{ language.language }} - {{ language.proficiency_level }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Publications Section -->
+                    {% if publications %}
+                    <h3 class="section-title">Publications</h3>
+                    <div class="section publications editable">
+                        {% for pub in publications %}
+                            <p><strong>{{ pub.title }}</strong></p>
+                            <p>{{ pub.publication_date }}</p>
+                            <p>{{ pub.journal_or_conference }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
